@@ -1,0 +1,102 @@
+<!-- logback config for spring boot.-->
+<!-- debug: determine whether print logback inner log. -->
+<!-- scan: determine whether valid logback config when changed -->
+<!-- scanPeriod: the period of scan logback config -->
+<configuration debug="false" scan="true" scanPeriod="60 seconds">
+    <contextName>logback</contextName>
+
+    <!-- current application name -->
+    <property name="app.name" value="hotel"/>
+
+    <!-- define linux file path -->
+    <property name="path" value="/feng/webservice/hotel/logs"/>
+
+    <!-- standard output -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %5p %c{1}:%L - %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- info level output -->
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <if condition='property("os.name").toLowerCase().contains("mac") || property("os.name").toLowerCase().contains("win")'>
+            <then>
+                <file>${user.home}/logs/${app.name}/${app.name}.log</file>
+            </then>
+            <else>
+                <file>${path}/${app.name}.log</file>
+            </else>
+        </if>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <if condition='property("os.name").toLowerCase().contains("mac") || property("os.name").toLowerCase().contains("win")'>
+                <then>
+                    <fileNamePattern>${user.home}/logs/${app.name}/${app.name}.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+                </then>
+                <else>
+                    <fileNamePattern>${path}/${app.name}.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+                </else>
+            </if>
+            <maxHistory>30</maxHistory>
+            <maxFileSize>50MB</maxFileSize>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %5p %c{1}:%L - [traceId:%X{traceId}] - %m%n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>info</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- error level output -->
+    <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <if condition='property("os.name").toLowerCase().contains("mac") || property("os.name").toLowerCase().contains("win")'>
+            <then>
+                <file>${user.home}/logs/${app.name}/${app.name}-error.log</file>
+            </then>
+            <else>
+                <file>${path}/${app.name}-error.log</file>
+            </else>
+        </if>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <if condition='property("os.name").toLowerCase().contains("mac") || property("os.name").toLowerCase().contains("win")'>
+                <then>
+                    <fileNamePattern>${user.home}/logs/${app.name}/${app.name}-error.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+                </then>
+                <else>
+                    <fileNamePattern>${path}/${app.name}-error.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+                </else>
+            </if>
+            <maxHistory>30</maxHistory>
+            <maxFileSize>50MB</maxFileSize>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %5p %c{1}:%L - [traceId:%X{traceId}] - %m%n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>error</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    <!-- ignore swagger -->
+    <logger name="springfox.documentation.swagger.readers.operation.OperationImplicitParameterReader" level="OFF"/>
+    <logger name="springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator" level="OFF"/>
+    <logger name="dao" level="DEBUG"/>
+    <!-- root level config -->
+    <root level="info">
+        <appender-ref ref="console" />
+        <appender-ref ref="file" />
+        <appender-ref ref="error" />
+    </root>
+
+</configuration>
