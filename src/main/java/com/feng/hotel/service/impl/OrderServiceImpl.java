@@ -24,23 +24,24 @@ import java.util.Date;
 @Service
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements IOrderService {
 
-    @Override
-    public Order save(CreateOrderRequest request, Long userNo) {
-        Date date = new Date();
-        Order order = new Order()
-            .setOrderNo(request.getOrderNo())
-            .setCreator(userNo)
-            .setModifier(userNo)
-            .setCreateTime(date)
-            .setModifyTime(date)
-            .setValid(Constants.Valid.NORMAL)
-            .setMortgage(request.getMortgage())
-            .setStatus(HotelConstants.OrderStatus.LODGING)
-            .setTotalPrice(request.getTotalPrice())
-            .setBalance(request.getTotalPrice().subtract(request.getMortgage()));
+  @Override
+  public Order save(CreateOrderRequest request, Long userNo) {
+    Date date = new Date();
+    Order order = new Order()
+        .setId(IdWorkerUtils.generateLongId())
+        .setOrderNo(IdWorkerUtils.generateStringId())
+        .setCreator(userNo)
+        .setModifier(userNo)
+        .setCreateTime(date)
+        .setModifyTime(date)
+        .setValid(Constants.Valid.NORMAL)
+        .setMortgage(request.getMortgage())
+        .setStatus(HotelConstants.OrderStatus.LODGING)
+        .setTotalPrice(request.getTotalPrice())
+        .setBalance(request.getTotalPrice().subtract(request.getMortgage()));
 
-        this.save(order);
+    this.save(order);
 
-        return order;
-    }
+    return order;
+  }
 }

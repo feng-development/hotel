@@ -1,11 +1,8 @@
 package com.feng.hotel.domain;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.util.Date;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,17 +10,17 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 订单房间 
+ * 客户 
  * </p>
  *
- * @author feng
- * @since 2021-08-07
+ * @author evision
+ * @since 2021-08-09
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("tb_order_room")
-public class OrderRoom extends Model<OrderRoom> {
+@TableName("tb_customer")
+public class Customer extends Model<Customer> {
 
     private static final long serialVersionUID=1L;
 
@@ -33,31 +30,24 @@ public class OrderRoom extends Model<OrderRoom> {
     private Long id;
 
     /**
-     * 订单id
+     * 身份证
      */
-    private Long orderId;
+    private String idNo;
 
     /**
-     * 房间id
+     * 姓名
      */
-    private Long roomId;
+    private String name;
 
     /**
-     * 上间房子的订单房间id 仅做转房使用
+     * 性别
      */
-    private String pid;
+    private String cex;
 
     /**
-     * 入住时间
+     * 身份证图片
      */
-    @TableField("beginTime")
-    private Date beginTime;
-
-    /**
-     * 离开时间
-     */
-    @TableField("engTime")
-    private Date engTime;
+    private String idUrl;
 
     /**
      * 创建人
@@ -87,15 +77,13 @@ public class OrderRoom extends Model<OrderRoom> {
 
     public static final String ID = "id";
 
-    public static final String ORDER_ID = "order_id";
+    public static final String ID_NO = "id_no";
 
-    public static final String ROOM_ID = "room_id";
+    public static final String NAME = "name";
 
-    public static final String PID = "pid";
+    public static final String CEX = "cex";
 
-    public static final String BEGINTIME = "beginTime";
-
-    public static final String ENGTIME = "engTime";
+    public static final String ID_URL = "id_url";
 
     public static final String CREATOR = "creator";
 

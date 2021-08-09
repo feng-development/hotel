@@ -17,5 +17,10 @@ public interface IOrderManager {
   void save(CreateOrderRequest request, Long userNo);
 
 
-
+  /**
+   * 获取详情
+   *
+   * @param id 订单id
+   */
+  void getDetail(Long id);
 }

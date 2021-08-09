@@ -7,15 +7,15 @@ import org.springframework.stereotype.Controller;
 
 /**
  * <p>
- * 订单房间  前端控制器
+ * 客户  前端控制器
  * </p>
  *
- * @author feng
- * @since 2021-08-07
+ * @author evision
+ * @since 2021-08-09
  */
 @Controller
-@RequestMapping("/orderRoom")
-public class OrderRoomController {
+@RequestMapping("/customer")
+public class CustomerController {
 
 }
 

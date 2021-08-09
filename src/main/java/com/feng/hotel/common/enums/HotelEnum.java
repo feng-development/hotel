@@ -9,7 +9,17 @@ import lombok.Getter;
  */
 
 public enum HotelEnum implements BizInfo {
-  AUTH_ERROR("123", "账号或密码错误");
+  //----------------------用户相关-----------------------------
+  AUTH_ERROR("4001",            "账号或密码错误"),
+
+
+  //----------------------用户相关-----------------------------
+  REVERSED_SIDE_ERROR("4101",  "身份证未摆正"),
+  NON_ID_CARD_ERROR("4102",    "图片错误"),
+  BLURRED("4103",              "图片模糊"),
+  OVER_EXPOSURE("4014",        "图片反光"),
+  UNKNOWN("4015",              "未知错误"),
+  ;
   private final String code;
 
   private final String msg;

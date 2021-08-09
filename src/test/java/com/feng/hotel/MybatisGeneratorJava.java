@@ -59,7 +59,7 @@ public class MybatisGeneratorJava {
     private static final String PACKAGE = "com.feng.hotel";
 
     //修改为你要生成的表名
-    private static final String TABLE_NAME = "tb_order_room";
+    private static final String TABLE_NAME = "tb_customer";
 
     //修改为表的前缀
     private static final String TABLE_PREFIX = "tb_";
@@ -128,7 +128,7 @@ public class MybatisGeneratorJava {
         dsc.setUrl(
             "jdbc:mysql://127.0.0.1:3306/hotel?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&useSSL=false");
         dsc.setUsername("root");
-        dsc.setPassword("123456");
+        dsc.setPassword("root");
         generator.setDataSource(dsc);
 
         PackageConfig packConfig = new PackageConfig();
@@ -190,8 +190,8 @@ public class MybatisGeneratorJava {
         StrategyConfig strategy = new StrategyConfig();
         strategy.setEntityLombokModel(true);
         strategy.setEntityColumnConstant(true);
-      //  strategy.setRestControllerStyle(true);
-        strategy.setSuperControllerClass("com.evision.common.share.BaseController");
+        strategy.setRestControllerStyle(false);
+        //strategy.setSuperControllerClass("com.evision.common.share.BaseController");
         strategy.setTablePrefix(TABLE_PREFIX);
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setInclude(TABLE_NAME);
