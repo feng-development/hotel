@@ -147,4 +147,23 @@ public interface Constants {
      */
     Long DEFAULT_ROOT_ID = 0L;
 
+
+    /**
+     * 删除表示符号
+     *
+     * @author asheng
+     * @since 2020/3/23
+     */
+    interface Valid {
+
+        /**
+         * 正常
+         */
+        int NORMAL = 1;
+
+        /**
+         * 已删除
+         */
+        int DELETE = 0;
+    }
 }

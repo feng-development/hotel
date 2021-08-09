@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @ApiModel(value = "房间人请求对象")
 public class RoomUserRequest {
 
-  @ApiModelProperty(value = "余额")
+  @ApiModelProperty(value = "房间价格")
   private BigDecimal balance;
 
 
