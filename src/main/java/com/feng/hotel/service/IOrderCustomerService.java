@@ -2,6 +2,8 @@ package com.feng.hotel.service;
 
 import com.feng.hotel.domain.OrderCustomer;
 import com.baomidou.mybatisplus.extension.service.IService;
+import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -21,4 +23,7 @@ public interface IOrderCustomerService extends IService<OrderCustomer> {
    * @param orderId    订单id
    */
   void save(Long roomId, Long orderId, Long customerId);
+
+
+  List<OrderCustomer> queryByOrderId(Set<String> orderIds);
 }

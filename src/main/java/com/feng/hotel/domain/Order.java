@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 订单 
+ * 订单
  * </p>
  *
  * @author feng
@@ -71,6 +71,10 @@ public class Order extends Model<Order> {
      */
     private String status;
 
+    /**
+     * 订单类型 钟点房 日租  月租
+     */
+    private Integer type;
     /**
      * 总价(已交的钱)
      */

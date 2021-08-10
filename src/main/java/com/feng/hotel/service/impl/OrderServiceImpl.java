@@ -1,5 +1,6 @@
 package com.feng.hotel.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.feng.hotel.base.Constants;
 import com.feng.hotel.common.HotelConstants;
 import com.feng.hotel.domain.Order;
@@ -8,7 +9,11 @@ import com.feng.hotel.request.CreateOrderRequest;
 import com.feng.hotel.service.IOrderService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.feng.hotel.utils.IdWorkerUtils;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.Date;
@@ -43,5 +48,16 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     this.save(order);
 
     return order;
+  }
+
+  @Override
+  public List<Order> queryByIds(Set<String> orderIds) {
+    if (CollectionUtils.isEmpty(orderIds)) {
+      return Collections.emptyList();
+    }
+
+    return this.list(Wrappers.<Order>lambdaQuery()
+        .eq(Order::getOrderNo, orderIds)
+    );
   }
 }

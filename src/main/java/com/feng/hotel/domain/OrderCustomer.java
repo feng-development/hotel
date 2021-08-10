@@ -63,7 +63,10 @@ public class OrderCustomer extends Model<OrderCustomer> {
      * 订单id
      */
     private Long orderId;
-
+    /**
+     * 订单状态 lodging：入住中，out离开，closure:关闭
+     */
+    private String status;
     /**
      * 客户id
      */

@@ -33,6 +33,7 @@
     <java-jwt.version>3.4.0</java-jwt.version>
     <jjwt.version>0.9.1</jjwt.version>
     <baidu.aip.version>4.16.2</baidu.aip.version>
+    <spring-data-redis.version>2.0.8.RELEASE</spring-data-redis.version>
   </properties>
 
   <dependencies>
@@ -90,6 +91,7 @@
       <scope>runtime</scope>
       <version>${mysql.version}</version>
     </dependency>
+
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-annotations</artifactId>
@@ -103,7 +105,12 @@
       <artifactId>mybatis-plus-boot-starter</artifactId>
       <version>${mybatis-plus.version}</version>
     </dependency>
-
+    <!-- spring data redis -->
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-redis</artifactId>
+      <version>${spring-data-redis.version}</version>
+    </dependency>
     <!-- mybatis generator -->
     <dependency>
       <groupId>com.baomidou</groupId>

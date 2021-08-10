@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 房间 
+ * 房间
  * </p>
  *
  * @author evision
@@ -78,7 +78,10 @@ public class Room extends Model<Room> {
      */
     private Integer valid;
 
-
+    /**
+     * 房间类型 大床房 标准间 单间 三人间
+     */
+    private String type;
 
 
     public static final String ROOM_NO = "room_no";
