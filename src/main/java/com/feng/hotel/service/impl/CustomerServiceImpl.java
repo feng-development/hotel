@@ -32,6 +32,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
     customer = new Customer()
         .setId(IdWorkerUtils.generateLongId())
         .setName(idCardResult.getName())
+        .setIdNo(idCardResult.getIdNum())
         .setIdUrl(path);
 
     this.save(customer);

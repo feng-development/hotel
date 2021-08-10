@@ -12,11 +12,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AipOcrConfig {
 
-  @Value(value = "${appId}")
+  @Value(value = "${baidu.appId}")
   private String APP_ID;
-  @Value(value = "${apiKey}")
+  @Value(value = "${baidu.apiKey}")
   private String API_KEY;
-  @Value(value = "${secretKey}")
+  @Value(value = "${baidu.secretKey}")
   private String SECRET_KEY;
 
   @Bean

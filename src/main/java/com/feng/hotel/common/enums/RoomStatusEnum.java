@@ -22,5 +22,11 @@ public enum RoomStatusEnum {
     /**
      * 维修中
      */
-    REPAIR;
+    REPAIR,
+
+    /**
+     * 使用中
+     */
+    USING;
+
 }

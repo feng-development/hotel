@@ -1,5 +1,6 @@
 package com.feng.hotel.manager.impl;
 
+import com.feng.hotel.common.enums.RoomStatusEnum;
 import com.feng.hotel.domain.Customer;
 import com.feng.hotel.domain.Order;
 import com.feng.hotel.manager.IOrderManager;
@@ -11,8 +12,10 @@ import com.feng.hotel.service.IIdCardService;
 import com.feng.hotel.service.IOrderCustomerService;
 import com.feng.hotel.service.IOrderRoomService;
 import com.feng.hotel.service.IOrderService;
-import com.feng.hotel.utils.IdWorkerUtils;
+import com.feng.hotel.service.IRoomService;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Administrator
@@ -31,20 +34,24 @@ public class OrderManagerImpl implements IOrderManager {
   private final IOrderCustomerService orderCustomerService;
 
   private final ICustomerService customerService;
+
+  private final IRoomService roomService;
   ;
 
   public OrderManagerImpl(IOrderService orderService, IOrderRoomService orderRoomService,
       IIdCardService idCardService,
       IOrderCustomerService orderCustomerService,
-      ICustomerService customerService) {
+      ICustomerService customerService, IRoomService roomService) {
     this.orderService = orderService;
     this.orderRoomService = orderRoomService;
     this.idCardService = idCardService;
     this.orderCustomerService = orderCustomerService;
     this.customerService = customerService;
+    this.roomService = roomService;
   }
 
   @Override
+  @Transactional
   public void save(CreateOrderRequest request, Long userNo) {
     //添加订单
 
@@ -60,11 +67,16 @@ public class OrderManagerImpl implements IOrderManager {
 
         //添加订单房间客户关联
         orderCustomerService.save(roomUser.getRoomId(),order.getId(),customer.getId());
-      }
 
+
+      }
 
       //添加订单房间管理
       orderRoomService.save(order.getId(), roomUser, userNo);
+
+      //修改此房间的状态
+      roomService.updateStatus(request.getRoomUsers().stream().map(RoomUserRequest::getRoomId).collect(
+          Collectors.toList()), RoomStatusEnum.USING,userNo);
 
     }
 

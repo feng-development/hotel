@@ -74,7 +74,6 @@ public class Order extends Model<Order> {
     /**
      * 总价(已交的钱)
      */
-    @TableField("totalPrice")
     private BigDecimal totalPrice;
 
     /**

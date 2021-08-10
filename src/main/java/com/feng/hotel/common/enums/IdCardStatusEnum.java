@@ -4,6 +4,7 @@ import com.feng.hotel.base.exception.BizException;
 import com.feng.hotel.base.exception.BizInfo;
 import com.feng.hotel.utils.Assert;
 import com.feng.hotel.utils.GlobalUtils;
+import java.util.Arrays;
 import java.util.Objects;
 import org.apache.ibatis.jdbc.Null;
 import org.apache.tomcat.jni.Global;
@@ -56,8 +57,11 @@ public enum IdCardStatusEnum {
    * @param code 枚举名
    */
   public static void check(String code) {
-    IdCardStatusEnum idCardStatusEnum = IdCardStatusEnum.valueOf(code);
+    IdCardStatusEnum idCardStatusEnum = Arrays.stream(IdCardStatusEnum.values())
+        .filter(e -> Objects.equals(e.getCode(), code)).findAny().orElse(null);
+
     Assert.assertNotNull(idCardStatusEnum, BizInfo.SYS_ERROR);
+
     BizInfo bizInfo = idCardStatusEnum.getBizInfo();
     if (Objects.nonNull(bizInfo)) {
       throw new BizException(bizInfo);

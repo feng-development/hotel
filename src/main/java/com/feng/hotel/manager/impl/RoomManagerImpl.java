@@ -6,8 +6,12 @@ import com.feng.hotel.request.RoomRequest;
 import com.feng.hotel.response.RoomResponse;
 import com.feng.hotel.service.IRoomService;
 import com.feng.hotel.utils.json.JsonUtils;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 /**
  * @author Administrator
@@ -29,6 +33,13 @@ public class RoomManagerImpl implements IRoomManager {
 
 
   public List<RoomResponse> list(String status) {
-    return JsonUtils.convertList(roomService.list(status), RoomResponse.class);
+    List<Room> list = roomService.list(status);
+    if (CollectionUtils.isEmpty(list)) {
+      return Collections.emptyList();
+    }
+
+    Set<Long> roomIds = list.stream().map(Room::getId).collect(Collectors.toSet());
+
+    return JsonUtils.convertList(list, RoomResponse.class);
   }
 }

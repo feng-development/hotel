@@ -22,7 +22,7 @@ public class RoomResponse {
     private BigDecimal price;
 
 
-    @ApiModelProperty(value = "状态 normal:正常，ready_clean：打扫中，repair：维修中，quit：退房")
+    @ApiModelProperty(value = "状态 normal:正常，ready_clean：打扫中，repair：维修中，using：使用中")
     private String status;
 
     @ApiModelProperty(value = "当前入住订单id 退房时清除")
