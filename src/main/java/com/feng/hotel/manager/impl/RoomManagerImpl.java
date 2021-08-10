@@ -27,8 +27,8 @@ public class RoomManagerImpl implements IRoomManager {
   }
 
   @Override
-  public void save(RoomRequest roomRequest) {
-    roomService.save(JsonUtils.convert(roomRequest, Room.class));
+  public void save(RoomRequest roomRequest1) {
+    roomService.save(JsonUtils.convert(roomRequest1, Room.class));
   }
 
 
