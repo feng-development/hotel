@@ -30,5 +30,5 @@ public interface IOrderService extends IService<Order> {
    * @param orderIds 订单id
    * @return 订单
    */
-  List<Order> queryByIds(Set<String> orderIds);
+  List<Order> queryByIds(Set<Long> orderIds);
 }

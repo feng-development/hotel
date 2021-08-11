@@ -54,4 +54,8 @@ public class OrderController extends BaseController {
     return Result.success();
   }
 
+  public Result<?> page(){
+
+  }
+
 }

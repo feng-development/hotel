@@ -51,7 +51,7 @@ public class Room extends Model<Room> {
     /**
      * 当前入住订单id 退房时清除
      */
-    private String orderId;
+    private Long orderId;
 
     /**
      * 创建人

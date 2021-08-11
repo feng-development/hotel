@@ -42,7 +42,7 @@ public class OrderCustomerServiceImpl extends
   }
 
   @Override
-  public List<OrderCustomer> queryByOrderId(Set<String> orderIds) {
+  public List<OrderCustomer> queryByOrderId(Set<Long> orderIds){
     if (CollectionUtils.isEmpty(orderIds)) {
       return Collections.emptyList();
     }

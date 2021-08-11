@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import com.feng.hotel.HotelApplicationTests;
 import com.feng.hotel.request.RoomRequest;
+import com.feng.hotel.response.RoomResponse;
 import com.feng.hotel.utils.IdWorkerUtils;
 import com.feng.hotel.utils.json.JsonUtils;
 import java.math.BigDecimal;
@@ -34,5 +35,9 @@ public class IRoomManagerTest extends HotelApplicationTests {
         System.out.println(JsonUtils.serialize(roomRequest));
     }
 
-
+    @Test
+    public void list() {
+        List<RoomResponse> list = roomManager.list(null);
+        System.out.println(JsonUtils.serialize(list));
+    }
 }

@@ -25,5 +25,5 @@ public interface IOrderCustomerService extends IService<OrderCustomer> {
   void save(Long roomId, Long orderId, Long customerId);
 
 
-  List<OrderCustomer> queryByOrderId(Set<String> orderIds);
+  List<OrderCustomer> queryByOrderId(Set<Long> orderIds);
 }

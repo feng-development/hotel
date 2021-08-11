@@ -18,6 +18,7 @@ package com.feng.hotel.utils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.feng.hotel.base.Pagination;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,7 +32,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.data.domain.Page;
 import org.springframework.lang.NonNull;
 
 /**
@@ -169,16 +169,16 @@ public final class LambdaUtils {
      * @return 转换后的分页对象
      */
     public static <T, E> Pagination<E> page(Page<T> page, Function<List<T>, Collection<E>> function) {
-        if (page == null || page.getTotalElements() == 0L) {
+        if (page == null || page.getTotal() == 0L) {
             return Pagination.empty();
         }
 
-        if (CollectionUtils.isEmpty(page.getContent())) {
-            return Pagination.page((int) page.getTotalElements(), Collections.emptyList());
+        if (CollectionUtils.isEmpty(page.getRecords())) {
+            return Pagination.page((int) page.getTotal(), Collections.emptyList());
         }
 
-        Collection<E> result = function.apply(page.getContent());
-        return Pagination.page((int) page.getTotalElements(), result);
+        Collection<E> result = function.apply(page.getRecords());
+        return Pagination.page((int) page.getTotal(), result);
     }
 
     /**

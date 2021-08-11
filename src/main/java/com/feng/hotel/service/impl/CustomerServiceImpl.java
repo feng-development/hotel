@@ -1,14 +1,19 @@
 package com.feng.hotel.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.feng.hotel.base.Constants.Valid;
 import com.feng.hotel.domain.Customer;
 import com.feng.hotel.mapper.CustomerMapper;
 import com.feng.hotel.response.IdCardResult;
 import com.feng.hotel.service.ICustomerService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.feng.hotel.utils.CollectionUtils;
 import com.feng.hotel.utils.IdWorkerUtils;
 import com.feng.hotel.utils.Limit;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import org.springframework.stereotype.Service;
 
 /**
@@ -38,6 +43,18 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
     this.save(customer);
 
     return customer;
+  }
+
+  @Override
+  public List<Customer> queryByIds(Set<Long> customerIds) {
+    if(CollectionUtils.isEmpty(customerIds)){
+      return Collections.emptyList();
+    }
+   return this.list(
+        Wrappers.<Customer>lambdaQuery()
+        .in(Customer::getId)
+        .eq(Customer::getValid, Valid.NORMAL)
+    );
   }
 
   private Customer getByIdNum(IdCardResult idCardResult) {

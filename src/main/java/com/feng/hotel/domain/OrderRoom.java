@@ -62,6 +62,11 @@ public class OrderRoom extends Model<OrderRoom> {
   @TableField("engTime")
   private Date engTime;
 
+
+  /**
+   * 订单类型 钟点房 日租  月租
+   */
+  private String type;
   /**
    * 创建人
    */

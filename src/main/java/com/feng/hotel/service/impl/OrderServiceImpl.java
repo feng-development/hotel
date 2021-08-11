@@ -1,5 +1,6 @@
 package com.feng.hotel.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.feng.hotel.base.Constants;
 import com.feng.hotel.common.HotelConstants;
@@ -51,11 +52,10 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
   }
 
   @Override
-  public List<Order> queryByIds(Set<String> orderIds) {
+  public List<Order> queryByIds(Set<Long> orderIds) {
     if (CollectionUtils.isEmpty(orderIds)) {
       return Collections.emptyList();
     }
-
     return this.list(Wrappers.<Order>lambdaQuery()
         .eq(Order::getOrderNo, orderIds)
     );
