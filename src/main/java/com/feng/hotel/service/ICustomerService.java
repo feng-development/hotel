@@ -28,7 +28,7 @@ public interface ICustomerService extends IService<Customer> {
    * 根据id查询客户
    *
    * @param customerIds 客户id
-   * @return
+   * @return 客户列表
    */
   List<Customer> queryByIds(Set<Long> customerIds);
 }

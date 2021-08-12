@@ -51,7 +51,7 @@ public class OrderRoomServiceImpl extends ServiceImpl<OrderRoomMapper, OrderRoom
   }
 
   @Override
-  public List<OrderRoom> queryByOrderIds(Set<String> orderIds) {
+  public List<OrderRoom> queryByOrderIds(Set<Long> orderIds) {
     return this.list(Wrappers.<OrderRoom>lambdaQuery()
         .in(OrderRoom::getOrderId, orderIds)
     );

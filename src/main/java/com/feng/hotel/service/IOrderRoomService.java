@@ -37,5 +37,5 @@ public interface IOrderRoomService extends IService<OrderRoom> {
    * @param orderIds  订单id
    * @return 订单房间管理表
    */
-  List<OrderRoom> queryByOrderIds(Set<String> orderIds);
+  List<OrderRoom> queryByOrderIds(Set<Long> orderIds);
 }

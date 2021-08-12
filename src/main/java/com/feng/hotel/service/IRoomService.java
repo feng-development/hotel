@@ -4,6 +4,7 @@ import com.feng.hotel.common.enums.RoomStatusEnum;
 import com.feng.hotel.domain.Room;
 import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -31,4 +32,12 @@ public interface IRoomService extends IService<Room> {
    * @param userNo  用户id
    */
   void updateStatus(List<Long> roomIds, RoomStatusEnum status, Long userNo);
+
+  /**
+   * 根据id获取房间
+   *
+   * @param roomIds 房间id
+   * @return
+   */
+  List<Room> queryByIds(Set<Long> roomIds);
 }
