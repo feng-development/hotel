@@ -1,4 +1,4 @@
-package com.feng.hotel.config;
+package com.feng.hotel.advice;
 
 import com.feng.hotel.base.entity.response.Result;
 import com.feng.hotel.utils.json.JsonUtils;
@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
  * @since 2021/8/13
  */
 @RestControllerAdvice
-public class GlobalResultConfig implements ResponseBodyAdvice<Object> {
+public class GlobalResultHandler implements ResponseBodyAdvice<Object> {
 
   @Override
   public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
