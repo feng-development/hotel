@@ -37,6 +37,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartException;
 
 /**
  * 全局异常处理器
@@ -60,7 +61,7 @@ public class GlobalExceptionHandler {
   @ResponseBody
   public Result<?> handleException(Throwable e, HttpServletRequest request) {
     String requestUri = Objects.isNull(request) ? StringUtils.EMPTY : request.getRequestURI();
-     boolean debug = Boolean.parseBoolean(request.getHeader(Constants.ENABLE_DEBUG_HEADER));
+    boolean debug = Boolean.parseBoolean(request.getHeader(Constants.ENABLE_DEBUG_HEADER));
 
     String cause = ExceptionUtils.getStackTrace(e);
 
@@ -69,7 +70,10 @@ public class GlobalExceptionHandler {
     if (e instanceof BizException) {
       return Result.error((BizException) e, debug ? cause : null);
     }
+    if (e instanceof MultipartException) {
+      return Result.error(BizInfo.FILE_UPLOAD_ERROR);
 
+    }
     if (e instanceof ConstraintViolationException) {
       ConstraintViolationException ce = (ConstraintViolationException) e;
       Set<ConstraintViolation<?>> constraintViolations = ce.getConstraintViolations();

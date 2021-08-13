@@ -73,7 +73,7 @@ public class MybatisGeneratorJava {
             author = "evision";
         }
 
-        URL resource = ClassLoader.getSystemClassLoader().getResource("application.properties");
+        URL resource = ClassLoader.getSystemClassLoader().getResource("profile/dev/application.properties");
         if (resource == null) {
             throw new RuntimeException("please check out put dir.");
         }
