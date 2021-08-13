@@ -31,13 +31,13 @@ public interface IRoomService extends IService<Room> {
    * @param status  状态
    * @param userNo  用户id
    */
-  void updateStatus(List<Long> roomIds, RoomStatusEnum status, Long userNo);
+  void updateStatus(Set<Long> roomIds, RoomStatusEnum status, Long userNo);
 
   /**
    * 根据id获取房间
    *
    * @param roomIds 房间id
-   * @return
+   * @return 房间列表
    */
   List<Room> queryByIds(Set<Long> roomIds);
 }

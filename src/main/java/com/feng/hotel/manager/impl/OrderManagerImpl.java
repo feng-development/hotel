@@ -91,7 +91,7 @@ public class OrderManagerImpl implements IOrderManager {
 
       //修改此房间的状态
       roomService.updateStatus(request.getRoomUsers().stream().map(RoomUserRequest::getRoomId).collect(
-          Collectors.toList()), RoomStatusEnum.USING, userNo);
+          Collectors.toSet()), RoomStatusEnum.USING, userNo);
 
     }
 

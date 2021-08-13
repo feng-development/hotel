@@ -37,7 +37,11 @@ public class RoomServiceImpl extends ServiceImpl<RoomMapper, Room> implements IR
   }
 
   @Override
-  public void updateStatus(List<Long> roomIds, RoomStatusEnum status, Long userNo) {
+  public void updateStatus(Set<Long> roomIds, RoomStatusEnum status, Long userNo) {
+
+    List<Room> rooms = this.queryByIds(roomIds);
+    rooms.forEach(e -> RoomStatusEnum.valueOf(e.getStatus()).validateNextStatus(status));
+
     this.update(Wrappers.<Room>lambdaUpdate()
         .set(Room::getStatus, status)
         .set(Room::getModifyTime, new Date())

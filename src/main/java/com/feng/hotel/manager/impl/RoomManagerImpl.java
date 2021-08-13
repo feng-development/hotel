@@ -1,5 +1,6 @@
 package com.feng.hotel.manager.impl;
 
+import com.feng.hotel.common.enums.RoomStatusEnum;
 import com.feng.hotel.domain.Customer;
 import com.feng.hotel.domain.Order;
 import com.feng.hotel.domain.OrderCustomer;
@@ -86,5 +87,10 @@ public class RoomManagerImpl implements IRoomManager {
     }).collect(Collectors.toList());
 
 
+  }
+
+  @Override
+  public void updateStatus(Long id, String status, Long userId) {
+    this.roomService.updateStatus(Collections.singleton(id), RoomStatusEnum.valueOf(status), userId);
   }
 }

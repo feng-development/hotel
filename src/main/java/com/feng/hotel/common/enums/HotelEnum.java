@@ -17,8 +17,10 @@ public enum HotelEnum implements BizInfo {
   REVERSED_SIDE_ERROR("4101",  "身份证未摆正"),
   NON_ID_CARD_ERROR("4102",    "图片错误"),
   BLURRED("4103",              "图片模糊"),
-  OVER_EXPOSURE("4014",        "图片反光"),
-  UNKNOWN("4015",              "未知错误"),
+  OVER_EXPOSURE("4104",        "图片反光"),
+  UNKNOWN("4105",              "未知错误"),
+
+  ROOM_STATUS_ERROR("4201",    "房间状态错误")
   ;
   private final String code;
 

@@ -26,4 +26,13 @@ public interface IRoomManager {
    * @return 房间列表
    */
   List<RoomResponse> list(String status);
+
+  /**
+   * 修改房间状态
+   *
+   * @param id     房间id
+   * @param status 状态
+   * @param userId 当前登陆人id
+   */
+  void updateStatus(Long id, String status, Long userId);
 }
