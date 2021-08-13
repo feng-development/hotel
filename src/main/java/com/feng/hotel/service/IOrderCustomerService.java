@@ -21,8 +21,9 @@ public interface IOrderCustomerService extends IService<OrderCustomer> {
    * @param roomId     房间id
    * @param customerId 客户id
    * @param orderId    订单id
+   * @param userNo     用户id
    */
-  void save(Long roomId, Long orderId, Long customerId);
+  void save(Long roomId, Long orderId, Long customerId, Long userNo);
 
 
   List<OrderCustomer> queryByOrderId(Set<Long> orderIds);

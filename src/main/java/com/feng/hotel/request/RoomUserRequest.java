@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.util.List;
 import lombok.Data;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @author Administrator
@@ -25,5 +24,6 @@ public class RoomUserRequest {
   @ApiModelProperty(value = "身份证图片url")
   private List<String> path;
 
-
+  @ApiModelProperty(value = "房间状态 DAILY:日租 MONTHLY：月组 HOURLY：钟点")
+  private String type;
 }

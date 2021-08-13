@@ -34,6 +34,7 @@
     <jjwt.version>0.9.1</jjwt.version>
     <baidu.aip.version>4.16.2</baidu.aip.version>
     <spring-data-redis.version>2.0.8.RELEASE</spring-data-redis.version>
+    <swagger.version>2.5.0</swagger.version>
   </properties>
 
   <dependencies>
@@ -155,17 +156,34 @@
       <version>${janino.version}</version>
     </dependency>
 
-    <!-- swagger -->
-    <dependency>
-      <groupId>io.swagger</groupId>
-      <artifactId>swagger-annotations</artifactId>
-      <version>${swagger.version}</version>
-    </dependency>
+
 
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
       <version>${guava.version}</version>
+    </dependency>
+
+    <!-- swagger api -->
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-swagger2</artifactId>
+      <version>${swagger.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>com.google.gauava</groupId>
+          <artifactId>gauava</artifactId>
+        </exclusion>
+        <exclusion>
+          <artifactId>slf4j-api</artifactId>
+          <groupId>org.slf4j</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-swagger-ui</artifactId>
+      <version>${swagger.version}</version>
     </dependency>
 
     <dependency>

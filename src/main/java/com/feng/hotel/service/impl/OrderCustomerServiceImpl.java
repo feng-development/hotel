@@ -2,6 +2,7 @@ package com.feng.hotel.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.feng.hotel.base.Constants.Valid;
+import com.feng.hotel.common.enums.RoomStatusEnum;
 import com.feng.hotel.domain.OrderCustomer;
 import com.feng.hotel.mapper.OrderCustomerMapper;
 import com.feng.hotel.service.IOrderCustomerService;
@@ -27,7 +28,7 @@ public class OrderCustomerServiceImpl extends
     ServiceImpl<OrderCustomerMapper, OrderCustomer> implements IOrderCustomerService {
 
   @Override
-  public void save(Long roomId, Long orderId, Long customerId) {
+  public void save(Long roomId, Long orderId, Long customerId, Long userNo) {
     Date date = new Date();
     this.save(
         new OrderCustomer()
@@ -35,14 +36,17 @@ public class OrderCustomerServiceImpl extends
             .setRoomId(roomId)
             .setCustomerId(customerId)
             .setOrderId(orderId)
+            .setStatus(RoomStatusEnum.USING.name())
             .setValid(Valid.NORMAL)
             .setCreateTime(date)
             .setModifyTime(date)
+            .setCreator(userNo)
+            .setModifier(userNo)
     );
   }
 
   @Override
-  public List<OrderCustomer> queryByOrderId(Set<Long> orderIds){
+  public List<OrderCustomer> queryByOrderId(Set<Long> orderIds) {
     if (CollectionUtils.isEmpty(orderIds)) {
       return Collections.emptyList();
     }

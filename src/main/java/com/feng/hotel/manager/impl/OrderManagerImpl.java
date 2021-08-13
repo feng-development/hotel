@@ -68,8 +68,11 @@ public class OrderManagerImpl implements IOrderManager {
   @Override
   @Transactional
   public void save(CreateOrderRequest request, Long userNo) {
-    //添加订单
+//    验证房间是否可以入住
+    List<Room> rooms = roomService.queryByIds(request.getRoomUsers().stream().map(RoomUserRequest::getRoomId).collect(Collectors.toSet()));
+    rooms.forEach(e -> RoomStatusEnum.valueOf(e.getStatus()).validateNextStatus(RoomStatusEnum.USING));
 
+    //添加订单
     Order order = this.orderService.save(request, userNo);
 
     for (RoomUserRequest roomUser : request.getRoomUsers()) {
@@ -79,11 +82,8 @@ public class OrderManagerImpl implements IOrderManager {
         IdCardResult idCardResult = idCardService.idCardRecognition(path);
         //尝试添加用户
         Customer customer = customerService.trySave(idCardResult, path);
-
         //添加订单房间客户关联
-        orderCustomerService.save(roomUser.getRoomId(), order.getId(), customer.getId());
-
-
+        orderCustomerService.save(roomUser.getRoomId(), order.getId(), customer.getId(), userNo);
       }
 
       //添加订单房间管理
@@ -98,10 +98,6 @@ public class OrderManagerImpl implements IOrderManager {
 
   }
 
-  @Override
-  public void getDetail(Long id) {
-
-  }
 
   @Override
   public Pagination<OrderResponse> page(OrderQueryRequest orderQueryRequest) {

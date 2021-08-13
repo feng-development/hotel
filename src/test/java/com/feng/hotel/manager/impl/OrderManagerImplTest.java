@@ -1,7 +1,5 @@
 package com.feng.hotel.manager.impl;
 
-import static org.junit.Assert.*;
-
 import com.feng.hotel.HotelApplicationTests;
 import com.feng.hotel.manager.IOrderManager;
 import com.feng.hotel.request.CreateOrderRequest;
@@ -27,7 +25,7 @@ public class OrderManagerImplTest extends HotelApplicationTests {
     request.setTotalPrice(new BigDecimal("60"));
 
     RoomUserRequest roomUserRequest = new RoomUserRequest();
-    roomUserRequest.setRoomId(100L);
+    roomUserRequest.setRoomId(1L);
     roomUserRequest.setBalance(new BigDecimal(60));
     roomUserRequest.setPath(Collections.singletonList("E:/20210810085204.jpg"));
     request.setRoomUsers(Collections.singletonList(roomUserRequest));

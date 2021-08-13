@@ -166,4 +166,25 @@ public interface Constants {
          */
         int DELETE = 0;
     }
+
+  /**
+   * request header with key 'auth'
+   */
+  String AUTH = "auth";
+
+  /**
+   * request header with key 'sign'
+   */
+  String SIGN = "sign";
+  /**
+   * base package
+   */
+  String BASE_PACKAGE = "com.feng";
+
+
+  /**
+   * 判断字符串是否是整形
+   */
+  Pattern NUMBER_PATTERN = Pattern.compile("^[-+]?[\\d]*$");
+
 }

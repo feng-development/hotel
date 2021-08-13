@@ -33,6 +33,7 @@ public class OrderRoomServiceImpl extends ServiceImpl<OrderRoomMapper, OrderRoom
         .setOrderId(orderId)
         .setRoomId(request.getRoomId())
         .setBeginTime(date)
+        .setType(request.getType())
         .setCreateTime(date)
         .setModifyTime(date)
         .setCreator(userNo)

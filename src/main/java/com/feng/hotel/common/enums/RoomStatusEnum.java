@@ -29,7 +29,7 @@ public enum RoomStatusEnum {
     READY_CLEAN{
         @Override
         RoomStatusEnum[] from() {
-            return new RoomStatusEnum[]{NORMAL};
+            return new RoomStatusEnum[]{USING};
         }
     },
     /**
@@ -48,7 +48,7 @@ public enum RoomStatusEnum {
     USING {
         @Override
         RoomStatusEnum[] from() {
-            return new RoomStatusEnum[]{NORMAL};
+            return new RoomStatusEnum[]{NORMAL };
         }
     };
 
