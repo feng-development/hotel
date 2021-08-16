@@ -20,7 +20,9 @@ public enum HotelEnum implements BizInfo {
   OVER_EXPOSURE("4104",        "图片反光"),
   UNKNOWN("4105",              "未知错误"),
 
-  ROOM_STATUS_ERROR("4201",    "房间状态错误")
+  ROOM_STATUS_ERROR("4201",    "房间状态错误"),
+  ROOM_NOT_EXIST_ERROR("4202", "房间不存在"),
+
   ;
   private final String code;
 

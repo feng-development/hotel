@@ -1,5 +1,6 @@
 package com.feng.hotel.manager.impl;
 
+import com.feng.hotel.common.enums.HotelEnum;
 import com.feng.hotel.common.enums.RoomStatusEnum;
 import com.feng.hotel.domain.Customer;
 import com.feng.hotel.domain.Order;
@@ -14,6 +15,7 @@ import com.feng.hotel.service.ICustomerService;
 import com.feng.hotel.service.IOrderCustomerService;
 import com.feng.hotel.service.IOrderService;
 import com.feng.hotel.service.IRoomService;
+import com.feng.hotel.utils.Assert;
 import com.feng.hotel.utils.LambdaUtils;
 import com.feng.hotel.utils.json.JsonUtils;
 import java.util.Collections;
@@ -55,6 +57,7 @@ public class RoomManagerImpl implements IRoomManager {
   }
 
 
+  @Override
   public List<RoomResponse> list(String status) {
     //查询房间
     List<Room> list = roomService.list(status);
@@ -93,4 +96,16 @@ public class RoomManagerImpl implements IRoomManager {
   public void updateStatus(Long id, String status, Long userId) {
     this.roomService.updateStatus(Collections.singleton(id), RoomStatusEnum.valueOf(status), userId);
   }
+
+    @Override
+    public void quit(Long id, Long userNo) {
+      Room room = this.roomService.getById(id);
+      Assert.assertNotNull(room, HotelEnum.ROOM_NOT_EXIST_ERROR);
+
+      Assert.assertNotNull(room.getOrderId(),HotelEnum.ROOM_STATUS_ERROR);
+
+      orderService.getById(room);
+
+
+    }
 }
