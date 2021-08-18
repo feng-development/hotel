@@ -8,19 +8,19 @@ package com.feng.hotel.common.enums;
  */
 public enum RoomTypeEnum {
 
-  /**
-   * 日租
-   */
-  DAILY,
+    /**
+     * 日租
+     */
+    DAILY,
 
-  /**
-   * 月租
-   */
-  MONTHLY,
+    /**
+     * 月租
+     */
+    MONTHLY,
 
-  /**
-   * 钟点
-   */
-  HOURLY,
+    /**
+     * 钟点
+     */
+    HOURLY,
 
 }

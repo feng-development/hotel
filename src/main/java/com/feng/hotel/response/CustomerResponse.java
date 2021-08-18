@@ -10,13 +10,13 @@ import lombok.Data;
 @Data
 public class CustomerResponse {
 
-  @ApiModelProperty(value = "id")
-  private Long id;
+    @ApiModelProperty(value = "id")
+    private Long id;
 
-  @ApiModelProperty(value = "身份证")
-  private String idNo;
+    @ApiModelProperty(value = "身份证")
+    private String idNo;
 
-  @ApiModelProperty(value = "姓名")
-  private String name;
+    @ApiModelProperty(value = "姓名")
+    private String name;
 
 }

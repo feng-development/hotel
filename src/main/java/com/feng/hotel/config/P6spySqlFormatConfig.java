@@ -21,6 +21,7 @@ import com.p6spy.engine.spy.appender.MessageFormattingStrategy;
 
 import java.time.LocalDateTime;
 import java.util.regex.Pattern;
+
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -49,7 +50,7 @@ public class P6spySqlFormatConfig implements MessageFormattingStrategy {
      */
     @Override
     public String formatMessage(int connectionId, String now, long elapsed, String category,
-        String prepared, String sql, String url) {
+                                String prepared, String sql, String url) {
 
         return StringUtils.isNotBlank(sql) ?
             DateUtils.format(LocalDateTime.now(), DatePattern.DATETIME.pattern())

@@ -22,15 +22,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user")
 public class UserController {
 
-  private final IUserManager userManager;
+    private final IUserManager userManager;
 
-  public UserController(IUserManager userManager) {
-    this.userManager = userManager;
-  }
+    public UserController(IUserManager userManager) {
+        this.userManager = userManager;
+    }
 
-  @PostMapping(value = "login")
-  public Result<?> auth(@RequestBody AuthRequest authRequest) {
-    return Result.success(userManager.auth(authRequest));
-  }
+    @PostMapping(value = "login")
+    public Result<?> auth(@RequestBody AuthRequest authRequest) {
+        return Result.success(userManager.auth(authRequest));
+    }
 }
 

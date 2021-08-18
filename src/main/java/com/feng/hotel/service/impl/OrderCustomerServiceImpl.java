@@ -9,10 +9,12 @@ import com.feng.hotel.service.IOrderCustomerService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.feng.hotel.utils.CollectionUtils;
 import com.feng.hotel.utils.IdWorkerUtils;
+
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+
 import org.springframework.stereotype.Service;
 
 /**
@@ -27,32 +29,32 @@ import org.springframework.stereotype.Service;
 public class OrderCustomerServiceImpl extends
     ServiceImpl<OrderCustomerMapper, OrderCustomer> implements IOrderCustomerService {
 
-  @Override
-  public void save(Long roomId, Long orderId, Long customerId, Long userNo) {
-    Date date = new Date();
-    this.save(
-        new OrderCustomer()
-            .setId(IdWorkerUtils.generateLongId())
-            .setRoomId(roomId)
-            .setCustomerId(customerId)
-            .setOrderId(orderId)
-            .setStatus(RoomStatusEnum.USING.name())
-            .setValid(Valid.NORMAL)
-            .setCreateTime(date)
-            .setModifyTime(date)
-            .setCreator(userNo)
-            .setModifier(userNo)
-    );
-  }
-
-  @Override
-  public List<OrderCustomer> queryByOrderId(Set<Long> orderIds) {
-    if (CollectionUtils.isEmpty(orderIds)) {
-      return Collections.emptyList();
+    @Override
+    public void save(Long roomId, Long orderId, Long customerId, Long userNo) {
+        Date date = new Date();
+        this.save(
+            new OrderCustomer()
+                .setId(IdWorkerUtils.generateLongId())
+                .setRoomId(roomId)
+                .setCustomerId(customerId)
+                .setOrderId(orderId)
+                .setStatus(RoomStatusEnum.USING.name())
+                .setValid(Valid.NORMAL)
+                .setCreateTime(date)
+                .setModifyTime(date)
+                .setCreator(userNo)
+                .setModifier(userNo)
+        );
     }
-    return this.list(
-        Wrappers.<OrderCustomer>lambdaQuery()
-            .in(OrderCustomer::getOrderId, orderIds)
-    );
-  }
+
+    @Override
+    public List<OrderCustomer> queryByOrderId(Set<Long> orderIds) {
+        if (CollectionUtils.isEmpty(orderIds)) {
+            return Collections.emptyList();
+        }
+        return this.list(
+            Wrappers.<OrderCustomer>lambdaQuery()
+                .in(OrderCustomer::getOrderId, orderIds)
+        );
+    }
 }

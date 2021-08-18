@@ -20,12 +20,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
-  @Override
-  public User getByLoginName(String loginName) {
-    return this.getOne(
-        Wrappers.<User>lambdaQuery()
-            .eq(User::getLoginName, loginName)
-            .last(Limit.lastOne())
-    );
-  }
+    @Override
+    public User getByLoginName(String loginName) {
+        return this.getOne(
+            Wrappers.<User>lambdaQuery()
+                .eq(User::getLoginName, loginName)
+                .last(Limit.lastOne())
+        );
+    }
 }

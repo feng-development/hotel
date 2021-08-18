@@ -17,23 +17,23 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 @RestControllerAdvice
 public class GlobalResultHandler implements ResponseBodyAdvice<Object> {
 
-  @Override
-  public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
-    return true;
-  }
-
-  @Override
-  public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request,
-      ServerHttpResponse response) {
-
-    if (body instanceof Result) {
-      return body;
+    @Override
+    public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
+        return true;
     }
-    //返回对象为string springmvc会使用StringHttpMessageConverter 会报错
-    //对string做特殊化处理 提前转换为string
-    if (body instanceof String) {
-      return JsonUtils.serialize(Result.success(body));
+
+    @Override
+    public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request,
+                                  ServerHttpResponse response) {
+
+        if (body instanceof Result) {
+            return body;
+        }
+        //返回对象为string springmvc会使用StringHttpMessageConverter 会报错
+        //对string做特殊化处理 提前转换为string
+        if (body instanceof String) {
+            return JsonUtils.serialize(Result.success(body));
+        }
+        return Result.success(body);
     }
-    return Result.success(body);
-  }
 }

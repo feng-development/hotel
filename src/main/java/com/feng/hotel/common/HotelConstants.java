@@ -19,5 +19,10 @@ public interface HotelConstants extends Constants {
          * 退房
          */
         String OUT = "out";
+
+        /**
+         * 关闭
+         */
+        String CLOSE = "close";
     }
 }

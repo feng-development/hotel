@@ -36,7 +36,6 @@ public class FileController {
             if (!file.mkdirs()) {
                 throw new BizException(BizInfo.FILE_UPLOAD_ERROR);
             }
-            ;
         }
 
         multipartFile.transferTo(file);

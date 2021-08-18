@@ -2,15 +2,17 @@ package com.feng.hotel.domain;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+
 import java.util.Date;
 import java.io.Serializable;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 客户 
+ * 客户
  * </p>
  *
  * @author evision
@@ -22,7 +24,7 @@ import lombok.experimental.Accessors;
 @TableName("tb_customer")
 public class Customer extends Model<Customer> {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * id

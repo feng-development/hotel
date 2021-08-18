@@ -18,6 +18,7 @@ package com.feng.hotel.base.entity.request;
 import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
 /**

@@ -17,8 +17,10 @@ package com.feng.hotel.utils;
 
 import com.feng.hotel.base.exception.BizException;
 import com.feng.hotel.common.enums.BizCodeEnum;
+
 import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -31,10 +33,14 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  */
 public final class RequestContextUtils {
 
-    /** HttpServletRequest容器 */
+    /**
+     * HttpServletRequest容器
+     */
     private static final ThreadLocal<HttpServletRequest> REQUEST_CONTEXT = new InheritableThreadLocal<>();
 
-    /** 用户Jwt信息容器 */
+    /**
+     * 用户Jwt信息容器
+     */
     private static final ThreadLocal<JwtBean> JWT_CONTEXT = new InheritableThreadLocal<>();
 
     private RequestContextUtils() {

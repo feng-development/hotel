@@ -10,9 +10,11 @@ import com.feng.hotel.request.CreateOrderRequest;
 import com.feng.hotel.service.IOrderService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.feng.hotel.utils.IdWorkerUtils;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.annotation.Validated;
@@ -30,34 +32,34 @@ import java.util.Date;
 @Service
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements IOrderService {
 
-  @Override
-  public Order save(CreateOrderRequest request, Long userNo) {
-    Date date = new Date();
-    Order order = new Order()
-        .setId(IdWorkerUtils.generateLongId())
-        .setOrderNo(IdWorkerUtils.generateStringId())
-        .setCreator(userNo)
-        .setModifier(userNo)
-        .setCreateTime(date)
-        .setModifyTime(date)
-        .setValid(Constants.Valid.NORMAL)
-        .setMortgage(request.getMortgage())
-        .setStatus(HotelConstants.OrderStatus.LODGING)
-        .setTotalPrice(request.getTotalPrice())
-        .setBalance(request.getTotalPrice().subtract(request.getMortgage()));
+    @Override
+    public Order save(CreateOrderRequest request, Long userNo) {
+        Date date = new Date();
+        Order order = new Order()
+            .setId(IdWorkerUtils.generateLongId())
+            .setOrderNo(IdWorkerUtils.generateStringId())
+            .setCreator(userNo)
+            .setModifier(userNo)
+            .setCreateTime(date)
+            .setModifyTime(date)
+            .setValid(Constants.Valid.NORMAL)
+            .setMortgage(request.getMortgage())
+            .setStatus(HotelConstants.OrderStatus.LODGING)
+            .setTotalPrice(request.getTotalPrice())
+            .setBalance(request.getTotalPrice().subtract(request.getMortgage()));
 
-    this.save(order);
+        this.save(order);
 
-    return order;
-  }
-
-  @Override
-  public List<Order> queryByIds(Set<Long> orderIds) {
-    if (CollectionUtils.isEmpty(orderIds)) {
-      return Collections.emptyList();
+        return order;
     }
-    return this.list(Wrappers.<Order>lambdaQuery()
-        .eq(Order::getOrderNo, orderIds)
-    );
-  }
+
+    @Override
+    public List<Order> queryByIds(Set<Long> orderIds) {
+        if (CollectionUtils.isEmpty(orderIds)) {
+            return Collections.emptyList();
+        }
+        return this.list(Wrappers.<Order>lambdaQuery()
+            .eq(Order::getOrderNo, orderIds)
+        );
+    }
 }

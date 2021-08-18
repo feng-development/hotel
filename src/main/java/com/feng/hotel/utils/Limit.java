@@ -26,10 +26,14 @@ import com.feng.hotel.base.Constants;
  */
 public final class Limit {
 
-    /** 开始位置 */
+    /**
+     * 开始位置
+     */
     private final Integer position;
 
-    /** 分页长度 */
+    /**
+     * 分页长度
+     */
     private final Integer length;
 
     public Limit(Integer length) {
@@ -63,7 +67,7 @@ public final class Limit {
 
         if (position != null) {
             buffer.append(position)
-                    .append(Constants.COMMA);
+                .append(Constants.COMMA);
         }
 
         buffer.append(length);

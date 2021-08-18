@@ -1,7 +1,9 @@
 package com.feng.hotel.request;
 
 import io.swagger.annotations.ApiModelProperty;
+
 import java.math.BigDecimal;
+
 import lombok.Data;
 import org.springframework.stereotype.Service;
 

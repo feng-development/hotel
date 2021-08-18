@@ -12,12 +12,12 @@ import lombok.Data;
 @ApiModel(value = "登录对象")
 public class AuthRequest {
 
-  @ApiModelProperty(value = "登录名")
-  private String loginName;
+    @ApiModelProperty(value = "登录名")
+    private String loginName;
 
-  @ApiModelProperty(value = "密码")
-  private String pwd;
+    @ApiModelProperty(value = "密码")
+    private String pwd;
 
-  @ApiModelProperty(value = "客户端")
-  private String client;
+    @ApiModelProperty(value = "客户端")
+    private String client;
 }

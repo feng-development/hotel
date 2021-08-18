@@ -10,10 +10,12 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.feng.hotel.utils.CollectionUtils;
 import com.feng.hotel.utils.IdWorkerUtils;
 import com.feng.hotel.utils.Limit;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+
 import org.springframework.stereotype.Service;
 
 /**
@@ -28,41 +30,41 @@ import org.springframework.stereotype.Service;
 public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> implements
     ICustomerService {
 
-  @Override
-  public Customer trySave(IdCardResult idCardResult, String path) {
-    Customer customer = this.getByIdNum(idCardResult);
-    if (Objects.nonNull(customer)) {
-      return customer;
+    @Override
+    public Customer trySave(IdCardResult idCardResult, String path) {
+        Customer customer = this.getByIdNum(idCardResult);
+        if (Objects.nonNull(customer)) {
+            return customer;
+        }
+        customer = new Customer()
+            .setId(IdWorkerUtils.generateLongId())
+            .setName(idCardResult.getName())
+            .setIdNo(idCardResult.getIdNum())
+            .setIdUrl(path);
+
+        this.save(customer);
+
+        return customer;
     }
-    customer = new Customer()
-        .setId(IdWorkerUtils.generateLongId())
-        .setName(idCardResult.getName())
-        .setIdNo(idCardResult.getIdNum())
-        .setIdUrl(path);
 
-    this.save(customer);
-
-    return customer;
-  }
-
-  @Override
-  public List<Customer> queryByIds(Set<Long> customerIds) {
-    if(CollectionUtils.isEmpty(customerIds)){
-      return Collections.emptyList();
+    @Override
+    public List<Customer> queryByIds(Set<Long> customerIds) {
+        if (CollectionUtils.isEmpty(customerIds)) {
+            return Collections.emptyList();
+        }
+        return this.list(
+            Wrappers.<Customer>lambdaQuery()
+                .in(Customer::getId)
+                .eq(Customer::getValid, Valid.NORMAL)
+        );
     }
-   return this.list(
-        Wrappers.<Customer>lambdaQuery()
-        .in(Customer::getId)
-        .eq(Customer::getValid, Valid.NORMAL)
-    );
-  }
 
-  private Customer getByIdNum(IdCardResult idCardResult) {
-    return this.getOne(
-        Wrappers.<Customer>lambdaQuery()
-            .eq(Customer::getIdNo, idCardResult.getIdNum())
-            .last(Limit.lastOne())
-    );
-  }
+    private Customer getByIdNum(IdCardResult idCardResult) {
+        return this.getOne(
+            Wrappers.<Customer>lambdaQuery()
+                .eq(Customer::getIdNo, idCardResult.getIdNum())
+                .last(Limit.lastOne())
+        );
+    }
 
 }

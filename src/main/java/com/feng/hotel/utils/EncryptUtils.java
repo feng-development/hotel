@@ -16,6 +16,7 @@
 package com.feng.hotel.utils;
 
 import com.feng.hotel.base.Constants;
+
 import java.nio.charset.StandardCharsets;
 import java.security.KeyFactory;
 import java.security.MessageDigest;
@@ -28,6 +29,7 @@ import java.util.Base64;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.spec.SecretKeySpec;
+
 import org.apache.commons.lang.StringUtils;
 
 /**

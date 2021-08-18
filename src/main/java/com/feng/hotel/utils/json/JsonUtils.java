@@ -32,6 +32,7 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -187,7 +188,7 @@ public final class JsonUtils {
      * @return 目标集合
      */
     public static <B, T> List<T> convertList(Collection<B> base,
-        Function<Collection<B>, List<T>> function) {
+                                             Function<Collection<B>, List<T>> function) {
         if (base == null || base.isEmpty()) {
             return Collections.emptyList();
         }

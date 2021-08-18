@@ -48,7 +48,7 @@ public class RoomController extends BaseController {
 
 
     @GetMapping(value = "update/status/{id}/{status}")
-    @ApiOperation(value = "修改房间状态")
+    @ApiOperation(value = "修改房间状态 ")
     public void post(@PathVariable(value = "id") @NotNull(message = "id不能为空") Long id,
                      @PathVariable(value = "status") @NotNull(message = "status不能为空") String status) {
         roomManager.updateStatus(id, status, super.getUserNo());

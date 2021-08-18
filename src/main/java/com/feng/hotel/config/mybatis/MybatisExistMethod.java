@@ -40,7 +40,7 @@ public class MybatisExistMethod extends AbstractMethod {
 
     @Override
     public MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass,
-        TableInfo tableInfo) {
+                                                 TableInfo tableInfo) {
         String tableName = tableInfo.getTableName();
         String idColumn = tableInfo.getKeyColumn();
         String sql = String.format(SQL_TEMPLATE, idColumn, tableName, "${ew.customSqlSegment}");

@@ -20,10 +20,12 @@ import com.feng.hotel.base.exception.BizException;
 import com.feng.hotel.common.enums.BizCodeEnum;
 import com.feng.hotel.utils.JwtBean;
 import com.feng.hotel.utils.RequestContextUtils;
+
 import java.util.Objects;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -32,26 +34,26 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class BaseController {
 
-  @Resource
-  protected HttpServletRequest request;
+    @Resource
+    protected HttpServletRequest request;
 
-  @Resource
-  protected HttpServletResponse response;
+    @Resource
+    protected HttpServletResponse response;
 
 
-  /**
-   * 获取用户id
-   *
-   * @return 用户id
-   */
-  protected Long getUserNo() {
-    Long userNo = RequestContextUtils.getUserNo();
-    if (Objects.isNull(userNo)) {
-      throw new BizException(BizCodeEnum.ACQUIRE_AUTH_TOKEN_ERROR);
+    /**
+     * 获取用户id
+     *
+     * @return 用户id
+     */
+    protected Long getUserNo() {
+        Long userNo = RequestContextUtils.getUserNo();
+        if (Objects.isNull(userNo)) {
+            throw new BizException(BizCodeEnum.ACQUIRE_AUTH_TOKEN_ERROR);
+        }
+        return userNo;
+
     }
-    return userNo;
-
-  }
 
 
 }

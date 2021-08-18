@@ -12,12 +12,12 @@ import lombok.Data;
 @Data
 public class IdCardResult {
 
-  @ApiModelProperty(value = "住址")
-  private String address;
+    @ApiModelProperty(value = "住址")
+    private String address;
 
-  @ApiModelProperty(value = "身份证号码")
-  private String idNum;
+    @ApiModelProperty(value = "身份证号码")
+    private String idNum;
 
-  @ApiModelProperty(value = "用户名称")
-  private String name;
+    @ApiModelProperty(value = "用户名称")
+    private String name;
 }

@@ -8,10 +8,10 @@ import com.feng.hotel.request.AuthRequest;
  */
 public interface IUserManager {
 
-  /**
-   * 登录认证
-   *
-   * @param authRequest 登录信息
-   */
-  String auth(AuthRequest authRequest);
+    /**
+     * 登录认证
+     *
+     * @param authRequest 登录信息
+     */
+    String auth(AuthRequest authRequest);
 }

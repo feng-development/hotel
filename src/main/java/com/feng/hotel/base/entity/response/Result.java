@@ -20,6 +20,7 @@ import com.feng.hotel.base.exception.BizException;
 import com.feng.hotel.base.exception.BizInfo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 import java.util.Collection;
 

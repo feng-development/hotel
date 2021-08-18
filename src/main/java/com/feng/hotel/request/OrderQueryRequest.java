@@ -11,8 +11,8 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(value = "订单查询对象")
 public class OrderQueryRequest extends PageRequest {
 
-  @ApiModelProperty(value = "订单类型")
-  private String type;
+    @ApiModelProperty(value = "订单类型")
+    private String type;
 
 
 }

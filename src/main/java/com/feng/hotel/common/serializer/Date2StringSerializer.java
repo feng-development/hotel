@@ -17,6 +17,7 @@ package com.feng.hotel.common.serializer;
 
 import com.alibaba.fastjson.serializer.JSONSerializer;
 import com.alibaba.fastjson.serializer.ObjectSerializer;
+
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Date;

@@ -13,11 +13,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IUserService extends IService<User> {
 
-  /**
-   * 根据用户名互殴去
-   *
-   * @param loginName 登录名
-   * @return 用户信息
-   */
-  User getByLoginName(String loginName);
+    /**
+     * 根据用户名互殴去
+     *
+     * @param loginName 登录名
+     * @return 用户信息
+     */
+    User getByLoginName(String loginName);
 }

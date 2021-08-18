@@ -18,6 +18,7 @@ package com.feng.hotel.base.exception;
 import com.alibaba.fastjson.JSONObject;
 import com.feng.hotel.base.entity.response.CommonResult;
 import com.feng.hotel.base.entity.response.Result;
+
 import java.util.Objects;
 
 /**

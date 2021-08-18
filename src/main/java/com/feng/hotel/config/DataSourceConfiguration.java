@@ -18,9 +18,11 @@ package com.feng.hotel.config;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.feng.hotel.config.mybatis.MybatisSqlInjector;
+
 import java.util.HashMap;
 import java.util.Map;
 import javax.sql.DataSource;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.logging.stdout.StdOutImpl;
 import org.aspectj.lang.JoinPoint;
@@ -92,7 +94,7 @@ public class DataSourceConfiguration {
     @DependsOn(value = {"originWriter", "originReader"})
     @ConditionalOnProperty(name = "spring.datasource.enable", havingValue = "true")
     public DataSource dynamicDataSource(@Qualifier("originWriter") DataSource writerDataSource,
-        @Qualifier("originReader") DataSource readerDataSource) {
+                                        @Qualifier("originReader") DataSource readerDataSource) {
         DynamicDataSource dynamicDataSource = new DynamicDataSource();
         Map<Object, Object> targetDataSources = new HashMap<>();
         targetDataSources.put(DataSourceType.WRITER, writerDataSource);

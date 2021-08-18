@@ -13,17 +13,20 @@ import com.feng.hotel.response.CustomerResponse;
 import com.feng.hotel.response.RoomResponse;
 import com.feng.hotel.service.ICustomerService;
 import com.feng.hotel.service.IOrderCustomerService;
+import com.feng.hotel.service.IOrderRoomService;
 import com.feng.hotel.service.IOrderService;
 import com.feng.hotel.service.IRoomService;
 import com.feng.hotel.utils.Assert;
 import com.feng.hotel.utils.LambdaUtils;
 import com.feng.hotel.utils.json.JsonUtils;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -34,77 +37,89 @@ import org.springframework.util.CollectionUtils;
 @Service
 public class RoomManagerImpl implements IRoomManager {
 
-  private final IRoomService roomService;
+    private final IRoomService roomService;
 
-  private final IOrderService orderService;
+    private final IOrderService orderService;
 
-  private final IOrderCustomerService orderCustomerService;
+    private final IOrderCustomerService orderCustomerService;
 
-  private final ICustomerService customerService;
+    private final ICustomerService customerService;
 
-  public RoomManagerImpl(IRoomService roomService,
-      IOrderService orderService, IOrderCustomerService orderCustomerService,
-      ICustomerService customerService) {
-    this.roomService = roomService;
-    this.orderService = orderService;
-    this.orderCustomerService = orderCustomerService;
-    this.customerService = customerService;
-  }
+    private final IOrderRoomService orderRoomService;
 
-  @Override
-  public void save(RoomRequest roomRequest) {
-    roomService.save(JsonUtils.convert(roomRequest, Room.class));
-  }
-
-
-  @Override
-  public List<RoomResponse> list(String status) {
-    //查询房间
-    List<Room> list = roomService.list(status);
-    if (CollectionUtils.isEmpty(list)) {
-      return Collections.emptyList();
+    public RoomManagerImpl(IRoomService roomService,
+                           IOrderService orderService, IOrderCustomerService orderCustomerService,
+                           ICustomerService customerService, IOrderRoomService orderRoomService) {
+        this.roomService = roomService;
+        this.orderService = orderService;
+        this.orderCustomerService = orderCustomerService;
+        this.customerService = customerService;
+        this.orderRoomService = orderRoomService;
     }
 
-    //查询再住订单
-    Set<Long> orderIds = list.stream().map(Room::getOrderId).collect(Collectors.toSet());
-
-    //查询在住人
-    List<OrderCustomer> orderCustomers = orderCustomerService.queryByOrderId(orderIds);
-    Map<Long, List<Long>> orderCustomerMaplist = LambdaUtils
-        .mapList(orderCustomers, OrderCustomer::getOrderId, OrderCustomer::getCustomerId);
-
-    List<Customer> customers = customerService.queryByIds(
-        orderCustomers.stream().map(OrderCustomer::getCustomerId).collect(Collectors.toSet()));
-    Map<Long, Customer> customerMap = LambdaUtils.map(customers, Customer::getId);
-
-    return list.stream().map(e -> {
-      RoomResponse convert = JsonUtils.convert(e, RoomResponse.class);
-      //再住客户
-      List<Long> customerIds = orderCustomerMaplist.get(e.getOrderId());
-      if (!CollectionUtils.isEmpty(customerIds)) {
-        convert.setCustomers(JsonUtils.convertList(customerIds.stream().map(customerMap::get)
-            .collect(Collectors.toList()), CustomerResponse.class));
-      }
-
-      return convert;
-    }).collect(Collectors.toList());
+    @Override
+    public void save(RoomRequest roomRequest) {
+        roomService.save(JsonUtils.convert(roomRequest, Room.class));
+    }
 
 
-  }
+    @Override
+    public List<RoomResponse> list(String status) {
+        //查询房间
+        List<Room> list = roomService.list(status);
+        if (CollectionUtils.isEmpty(list)) {
+            return Collections.emptyList();
+        }
 
-  @Override
-  public void updateStatus(Long id, String status, Long userId) {
-    this.roomService.updateStatus(Collections.singleton(id), RoomStatusEnum.valueOf(status), userId);
-  }
+        //查询再住订单
+        Set<Long> orderIds = list.stream().map(Room::getOrderId).collect(Collectors.toSet());
+
+        //查询在住人
+        List<OrderCustomer> orderCustomers = orderCustomerService.queryByOrderId(orderIds);
+        Map<Long, List<Long>> orderCustomerMaplist = LambdaUtils
+            .mapList(orderCustomers, OrderCustomer::getOrderId, OrderCustomer::getCustomerId);
+
+        List<Customer> customers = customerService.queryByIds(
+            orderCustomers.stream().map(OrderCustomer::getCustomerId).collect(Collectors.toSet()));
+        Map<Long, Customer> customerMap = LambdaUtils.map(customers, Customer::getId);
+
+        return list.stream().map(e -> {
+            RoomResponse convert = JsonUtils.convert(e, RoomResponse.class);
+            //再住客户
+            List<Long> customerIds = orderCustomerMaplist.get(e.getOrderId());
+            if (!CollectionUtils.isEmpty(customerIds)) {
+                convert.setCustomers(JsonUtils.convertList(customerIds.stream().map(customerMap::get)
+                    .collect(Collectors.toList()), CustomerResponse.class));
+            }
+
+            return convert;
+        }).collect(Collectors.toList());
+
+
+    }
+
+    @Override
+    public void updateStatus(Long id, String status, Long userId) {
+        this.roomService.updateStatus(Collections.singleton(id), RoomStatusEnum.valueOf(status), userId);
+    }
 
     @Override
     public void quit(Long id, Long userNo) {
-      Room room = this.roomService.getById(id);
-      Assert.assertNotNull(room, HotelEnum.ROOM_NOT_EXIST_ERROR);
+        Room room = this.roomService.getById(id);
+        Assert.assertNotNull(room, HotelEnum.ROOM_NOT_EXIST_ERROR);
 
-      Assert.assertNotNull(room.getOrderId(),HotelEnum.ROOM_STATUS_ERROR);
+        Assert.assertNotNull(room.getOrderId(), HotelEnum.ROOM_STATUS_ERROR);
 
-      orderService.getById(room);
+
+        //查看订单下是否只有一个在住房间 只有一个 整个订单退出
+        List<OrderRoom> orderRooms = orderRoomService.queryByOrderIds(Collections.singleton(room.getOrderId()));
+        List<OrderRoom> orderRoomList = orderRooms.stream().filter(e -> Objects.equals(e.getStatus(), RoomStatusEnum.USING.name())).collect(Collectors.toList());
+        if (orderRoomList.size() == 1) {
+            this.orderService.update();
+        }
+
+
+        Order order = orderService.getById(room);
 
 
     }

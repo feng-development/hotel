@@ -27,125 +27,125 @@ import java.util.regex.Pattern;
  */
 public interface Constants {
 
-  /**
-   * utf-8
-   */
-  String UTF_8 = "utf-8";
+    /**
+     * utf-8
+     */
+    String UTF_8 = "utf-8";
 
-  /**
-   * RSA
-   */
-  String RSA = "RSA";
+    /**
+     * RSA
+     */
+    String RSA = "RSA";
 
-  /**
-   * utf-8字符集
-   */
-  Charset UTF_8_CHARSET = StandardCharsets.UTF_8;
+    /**
+     * utf-8字符集
+     */
+    Charset UTF_8_CHARSET = StandardCharsets.UTF_8;
 
-  /**
-   * http schema
-   */
-  String SCHEMA_HTTP = "http://";
+    /**
+     * http schema
+     */
+    String SCHEMA_HTTP = "http://";
 
-  /**
-   * https schema
-   */
-  String SCHEMA_HTTPS = "https://";
+    /**
+     * https schema
+     */
+    String SCHEMA_HTTPS = "https://";
 
-  /**
-   * application json
-   */
-  String APPLICATION_JSON_CHARSET = "application/json;charset=utf-8";
+    /**
+     * application json
+     */
+    String APPLICATION_JSON_CHARSET = "application/json;charset=utf-8";
 
-  /**
-   * application text html
-   */
-  String APPLICATION_TEXT_HTML_CHARSET = "text/html;charset=utf-8";
+    /**
+     * application text html
+     */
+    String APPLICATION_TEXT_HTML_CHARSET = "text/html;charset=utf-8";
 
-  /**
-   * content type
-   */
-  String CONTENT_TYPE = "Content-Type";
+    /**
+     * content type
+     */
+    String CONTENT_TYPE = "Content-Type";
 
-  /**
-   * 手机号码正则匹配
-   */
-  String REGEX_MOBILE_EXACT = "^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[3,5-8])|(18[0-9])|166|198|199|(147))\\d{8}$";
+    /**
+     * 手机号码正则匹配
+     */
+    String REGEX_MOBILE_EXACT = "^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[3,5-8])|(18[0-9])|166|198|199|(147))\\d{8}$";
 
-  /**
-   * 身份证号码正则表达式
-   */
-  String REGEX_ID_CARD_EXACT = "(^[1-9]\\d{5}(18|19|([23]\\d))\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$)|(^[1-9]\\d{5}\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}$)";
+    /**
+     * 身份证号码正则表达式
+     */
+    String REGEX_ID_CARD_EXACT = "(^[1-9]\\d{5}(18|19|([23]\\d))\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$)|(^[1-9]\\d{5}\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}$)";
 
-  /**
-   * 匹配手机号码Pattern
-   */
-  Pattern MOBILE_PATTERN = Pattern.compile(REGEX_MOBILE_EXACT);
+    /**
+     * 匹配手机号码Pattern
+     */
+    Pattern MOBILE_PATTERN = Pattern.compile(REGEX_MOBILE_EXACT);
 
-  /**
-   * 分隔符
-   */
-  String SPLIT = "/";
+    /**
+     * 分隔符
+     */
+    String SPLIT = "/";
 
-  /**
-   * file name
-   */
-  String FILE_NAME = "filename";
+    /**
+     * file name
+     */
+    String FILE_NAME = "filename";
 
-  /**
-   * 方法分隔符
-   */
-  String METHOD_SPLIT = "#";
+    /**
+     * 方法分隔符
+     */
+    String METHOD_SPLIT = "#";
 
-  /**
-   * 记录id
-   */
-  String TRACE_ID = "traceId";
+    /**
+     * 记录id
+     */
+    String TRACE_ID = "traceId";
 
-  /**
-   * 逗号
-   */
-  String COMMA = ",";
+    /**
+     * 逗号
+     */
+    String COMMA = ",";
 
-  /**
-   * 中文逗号
-   */
-  String COMMA_CH = "，";
+    /**
+     * 中文逗号
+     */
+    String COMMA_CH = "，";
 
-  /**
-   * 下划线
-   */
-  String UNDERLINE = "_";
+    /**
+     * 下划线
+     */
+    String UNDERLINE = "_";
 
-  /**
-   * 中划线
-   */
-  String HYPHEN = "-";
+    /**
+     * 中划线
+     */
+    String HYPHEN = "-";
 
-  /**
-   * 冒号
-   */
-  String COLON = ":";
+    /**
+     * 冒号
+     */
+    String COLON = ":";
 
-  /**
-   * 句号
-   */
-  String DOT = ".";
+    /**
+     * 句号
+     */
+    String DOT = ".";
 
-  /**
-   * 邮箱发送协议
-   */
-  String PROTOCOL_SMTP = "smtp";
+    /**
+     * 邮箱发送协议
+     */
+    String PROTOCOL_SMTP = "smtp";
 
-  /**
-   * 开启Http的Debug
-   */
-  String ENABLE_DEBUG_HEADER = "enable_debug";
+    /**
+     * 开启Http的Debug
+     */
+    String ENABLE_DEBUG_HEADER = "enable_debug";
 
-  /**
-   * 默认树根节点id
-   */
-  Long DEFAULT_ROOT_ID = 0L;
+    /**
+     * 默认树根节点id
+     */
+    Long DEFAULT_ROOT_ID = 0L;
 
 
     /**
@@ -167,24 +167,39 @@ public interface Constants {
         int DELETE = 0;
     }
 
-  /**
-   * request header with key 'auth'
-   */
-  String AUTH = "auth";
+    /**
+     * request header with key 'auth'
+     */
+    String AUTH = "auth";
 
-  /**
-   * request header with key 'sign'
-   */
-  String SIGN = "sign";
-  /**
-   * base package
-   */
-  String BASE_PACKAGE = "com.feng";
+    /**
+     * request header with key 'sign'
+     */
+    String SIGN = "sign";
+    /**
+     * base package
+     */
+    String BASE_PACKAGE = "com.feng";
 
 
-  /**
-   * 判断字符串是否是整形
-   */
-  Pattern NUMBER_PATTERN = Pattern.compile("^[-+]?[\\d]*$");
+    /**
+     * 判断字符串是否是整形
+     */
+    Pattern NUMBER_PATTERN = Pattern.compile("^[-+]?[\\d]*$");
+
+    interface OrderStatus {
+        /**
+         * 正常
+         */
+        String NORMAL = "normal";
+        /**
+         * 关闭
+         */
+        String CLOSE = "close";
+        /**
+         * 完结
+         */
+        String SUCCESS = "success";
+    }
 
 }

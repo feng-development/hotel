@@ -3,11 +3,15 @@ package com.feng.hotel.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.math.BigDecimal;
+
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+
 import java.util.Date;
 import java.io.Serializable;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -26,7 +30,7 @@ import lombok.experimental.Accessors;
 @TableName("tb_room")
 public class Room extends Model<Room> {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * id
