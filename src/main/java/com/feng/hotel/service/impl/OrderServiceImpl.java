@@ -62,4 +62,15 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
             .eq(Order::getOrderNo, orderIds)
         );
     }
+
+    @Override
+    public void updateStatus(Long orderId, String status, Long userNo) {
+        this.update(
+            Wrappers.<Order>lambdaUpdate()
+                .set(Order::getStatus, status)
+                .set(Order::getModifier, userNo)
+                .set(Order::getModifyTime, new Date())
+                .eq(Order::getId, orderId)
+        );
+    }
 }

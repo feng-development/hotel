@@ -19,7 +19,7 @@ public interface IRoomManager {
      *
      * @param roomRequest 房间参数
      */
-    void save(RoomRequest roomRequest);
+    void save(RoomRequest roomRequest,Long userNo);
 
     /**
      * 获取房间列表
@@ -41,9 +41,9 @@ public interface IRoomManager {
     /**
      * 退房
      *
-     * @param id     房间id
+     * @param roomId     房间id
      * @param userNo 操作人
      */
-    void quit(Long id, Long userNo);
+    void quit(Long roomId, Long userNo);
 
 }

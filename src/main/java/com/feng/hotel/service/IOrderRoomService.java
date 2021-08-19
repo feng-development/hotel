@@ -41,4 +41,14 @@ public interface IOrderRoomService extends IService<OrderRoom> {
      * @return 订单房间管理表
      */
     List<OrderRoom> queryByOrderIds(Set<Long> orderIds);
+
+    /**
+     * 修改状态
+     *
+     * @param orderId         订单id
+     * @param roomId          房间id
+     * @param orderRoomStatus 订单
+     * @param userNo          用户id
+     */
+    void updateStatus(Long orderId, Long roomId, String orderRoomStatus, Long userNo);
 }

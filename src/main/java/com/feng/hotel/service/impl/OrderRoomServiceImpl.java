@@ -62,4 +62,16 @@ public class OrderRoomServiceImpl extends ServiceImpl<OrderRoomMapper, OrderRoom
             .in(OrderRoom::getOrderId, orderIds)
         );
     }
+
+    @Override
+    public void updateStatus(Long orderId, Long roomId, String orderRoomStatus, Long userNo) {
+        this.update(
+            Wrappers.<OrderRoom>lambdaUpdate()
+                .set(OrderRoom::getStatus, orderRoomStatus)
+                .set(OrderRoom::getModifier, userNo)
+                .set(OrderRoom::getModifyTime, new Date())
+                .eq(OrderRoom::getOrderId, orderId)
+                .eq(OrderRoom::getRoomId, roomId)
+        );
+    }
 }

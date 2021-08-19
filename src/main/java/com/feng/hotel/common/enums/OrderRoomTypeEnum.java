@@ -6,7 +6,7 @@ package com.feng.hotel.common.enums;
  * @author Administrator
  * @since 2021/8/13
  */
-public enum RoomTypeEnum {
+public enum OrderRoomTypeEnum {
 
     /**
      * 日租

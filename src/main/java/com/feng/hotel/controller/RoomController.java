@@ -36,7 +36,7 @@ public class RoomController extends BaseController {
     @PostMapping(value = "save")
     @ApiOperation(value = "添加房间")
     public Result<?> save(@RequestBody RoomRequest roomRequest) {
-        roomManager.save(roomRequest);
+        roomManager.save(roomRequest,super.getUserNo());
         return Result.success();
     }
 

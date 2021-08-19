@@ -1,8 +1,7 @@
 package com.feng.hotel.manager;
 
-import static org.junit.Assert.*;
-
 import com.feng.hotel.HotelApplicationTests;
+import com.feng.hotel.common.enums.OrderRoomTypeEnum;
 import com.feng.hotel.request.RoomRequest;
 import com.feng.hotel.response.RoomResponse;
 import com.feng.hotel.utils.IdWorkerUtils;
@@ -13,8 +12,6 @@ import java.util.List;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.autoconfigure.json.JsonTest;
 
 /**
  * @author Administrator
@@ -30,9 +27,9 @@ public class IRoomManagerTest extends HotelApplicationTests {
         RoomRequest roomRequest = new RoomRequest();
         roomRequest.setRoomNo("401");
         roomRequest.setPrice(new BigDecimal("60"));
-        roomRequest.setStatus("1");
         roomRequest.setId(IdWorkerUtils.generateLongId());
-        roomManager.save(roomRequest);
+        roomRequest.setType("大床");
+        roomManager.save(roomRequest,123L);
 
         System.out.println(JsonUtils.serialize(roomRequest));
     }
@@ -41,5 +38,10 @@ public class IRoomManagerTest extends HotelApplicationTests {
     public void list() {
         List<RoomResponse> list = roomManager.list(null);
         System.out.println(JsonUtils.serialize(list));
+    }
+
+    @Test
+    public void name() {
+        roomManager.quit(123L,123L);
     }
 }

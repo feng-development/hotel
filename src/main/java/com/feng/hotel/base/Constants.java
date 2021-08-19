@@ -187,19 +187,5 @@ public interface Constants {
      */
     Pattern NUMBER_PATTERN = Pattern.compile("^[-+]?[\\d]*$");
 
-    interface OrderStatus {
-        /**
-         * 正常
-         */
-        String NORMAL = "normal";
-        /**
-         * 关闭
-         */
-        String CLOSE = "close";
-        /**
-         * 完结
-         */
-        String SUCCESS = "success";
-    }
 
 }

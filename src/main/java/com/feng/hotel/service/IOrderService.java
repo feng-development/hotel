@@ -33,5 +33,12 @@ public interface IOrderService extends IService<Order> {
      */
     List<Order> queryByIds(Set<Long> orderIds);
 
-    void updateStatus();
+    /**
+     * 修改订单状态
+     *
+     * @param orderId 订单id
+     * @param status  状态
+     * @param userNo  修改人
+     */
+    void updateStatus(Long orderId, String status, Long userNo);
 }

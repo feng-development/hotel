@@ -1,5 +1,7 @@
 package com.feng.hotel.manager.impl;
 
+import com.feng.hotel.base.Constants;
+import com.feng.hotel.common.HotelConstants;
 import com.feng.hotel.common.enums.HotelEnum;
 import com.feng.hotel.common.enums.RoomStatusEnum;
 import com.feng.hotel.domain.Customer;
@@ -21,6 +23,7 @@ import com.feng.hotel.utils.LambdaUtils;
 import com.feng.hotel.utils.json.JsonUtils;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -28,6 +31,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 /**
@@ -58,8 +62,16 @@ public class RoomManagerImpl implements IRoomManager {
     }
 
     @Override
-    public void save(RoomRequest roomRequest) {
-        roomService.save(JsonUtils.convert(roomRequest, Room.class));
+    public void save(RoomRequest roomRequest, Long userNo) {
+        Date date = new Date();
+        Room room = JsonUtils.convert(roomRequest, Room.class);
+        room.setStatus(RoomStatusEnum.NORMAL.name());
+        room.setCreator(userNo);
+        room.setModifier(userNo);
+        room.setCreateTime(date);
+        room.setModifyTime(date);
+        room.setValid(Constants.Valid.NORMAL);
+        roomService.save(room);
     }
 
 
@@ -104,10 +116,10 @@ public class RoomManagerImpl implements IRoomManager {
     }
 
     @Override
-    public void quit(Long id, Long userNo) {
-        Room room = this.roomService.getById(id);
+    @Transactional(rollbackFor = Throwable.class)
+    public void quit(Long roomId, Long userNo) {
+        Room room = this.roomService.getById(roomId);
         Assert.assertNotNull(room, HotelEnum.ROOM_NOT_EXIST_ERROR);
-
         Assert.assertNotNull(room.getOrderId(), HotelEnum.ROOM_STATUS_ERROR);
 
 
@@ -115,12 +127,13 @@ public class RoomManagerImpl implements IRoomManager {
         List<OrderRoom> orderRooms = orderRoomService.queryByOrderIds(Collections.singleton(room.getOrderId()));
         List<OrderRoom> orderRoomList = orderRooms.stream().filter(e -> Objects.equals(e.getStatus(), RoomStatusEnum.USING.name())).collect(Collectors.toList());
         if (orderRoomList.size() == 1) {
-            this.orderService.update();
+            orderService.updateStatus(room.getOrderId(), HotelConstants.OrderStatus.OUT, userNo);
         }
 
-
-        Order order = orderService.getById(room);
-
+        //修改房间状态
+        roomService.updateStatus(Collections.singleton(roomId), RoomStatusEnum.READY_CLEAN, userNo);
+        //修改房间订单关联状态
+        orderRoomService.updateStatus(room.getOrderId(), roomId, HotelConstants.OrderStatus.OUT, userNo);
 
     }
 }

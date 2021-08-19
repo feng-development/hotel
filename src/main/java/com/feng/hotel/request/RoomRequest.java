@@ -26,9 +26,7 @@ public class RoomRequest {
 
 
     @ApiModelProperty(value = "状态 normal:正常，ready_clean：打扫中，repair：维修中，quit：退房")
-    private String status;
+    private String type;
 
-    @ApiModelProperty(value = "当前入住订单id 退房时清除")
-    private String orderId;
 
 }
