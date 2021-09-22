@@ -1,9 +1,13 @@
 package com.feng.hotel.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.feng.hotel.base.Constants.Valid;
 import com.feng.hotel.domain.Customer;
 import com.feng.hotel.mapper.CustomerMapper;
+import com.feng.hotel.request.CustomerPageQuery;
 import com.feng.hotel.response.IdCardResult;
 import com.feng.hotel.service.ICustomerService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -16,6 +20,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 /**
@@ -57,6 +62,19 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
                 .in(Customer::getId)
                 .eq(Customer::getValid, Valid.NORMAL)
         );
+    }
+
+    @Override
+    public IPage<Customer> page(CustomerPageQuery customerPageQuery) {
+        LambdaQueryWrapper<Customer> wrapper = Wrappers.<Customer>lambdaQuery();
+        if (StringUtils.isNotBlank(customerPageQuery.getIdNo())) {
+            wrapper.like(Customer::getIdNo, customerPageQuery.getIdNo());
+        }
+        if (StringUtils.isNotBlank(customerPageQuery.getName())) {
+            wrapper.like(Customer::getName, customerPageQuery.getName());
+        }
+       return this.page(
+            new Page<>(customerPageQuery.getPage(), customerPageQuery.getSize()), wrapper);
     }
 
     private Customer getByIdNum(IdCardResult idCardResult) {

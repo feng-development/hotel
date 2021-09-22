@@ -33,6 +33,7 @@ public class TokenInterceptor implements HandlerInterceptor {
      */
     protected static final Integer JWT_LENGTH = 3;
 
+    @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String token = request.getHeader("token");
         if (StringUtils.isBlank(token)) {

@@ -45,6 +45,7 @@ public class IdCardServiceImpl implements IIdCardService {
      * @param path 图片路径
      * @return 身份识别信息
      */
+    @Override
     public IdCardResult idCardRecognition(String path) {
 
         JSONObject jsonObject = aipOcr.idcard(path, ID_CARD_SIDE, new HashMap<>());

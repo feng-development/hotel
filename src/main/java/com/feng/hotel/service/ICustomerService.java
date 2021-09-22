@@ -1,7 +1,9 @@
 package com.feng.hotel.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.feng.hotel.domain.Customer;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.feng.hotel.request.CustomerPageQuery;
 import com.feng.hotel.response.IdCardResult;
 
 import java.util.List;
@@ -32,4 +34,12 @@ public interface ICustomerService extends IService<Customer> {
      * @return 客户列表
      */
     List<Customer> queryByIds(Set<Long> customerIds);
+
+    /**
+     * 分页查询客户参数
+     *
+     * @param customerPageQuery 客户查询参数
+     * @return 客户列表
+     */
+    IPage<Customer> page(CustomerPageQuery customerPageQuery);
 }
