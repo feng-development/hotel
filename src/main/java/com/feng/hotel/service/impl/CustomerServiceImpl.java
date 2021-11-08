@@ -73,8 +73,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         if (StringUtils.isNotBlank(customerPageQuery.getName())) {
             wrapper.like(Customer::getName, customerPageQuery.getName());
         }
-       return this.page(
-            new Page<>(customerPageQuery.getPage(), customerPageQuery.getSize()), wrapper);
+        return this.page(new Page<>(customerPageQuery.getPage(), customerPageQuery.getSize()), wrapper);
     }
 
     private Customer getByIdNum(IdCardResult idCardResult) {
