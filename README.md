@@ -14,3 +14,7 @@
 * response 返回对象
 * service 业务层
 * utils 工具类
+
+
+# 注意点
+身份证图片存放在用户目录下images文件夹下
