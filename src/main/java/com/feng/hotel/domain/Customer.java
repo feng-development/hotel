@@ -52,6 +52,10 @@ public class Customer extends Model<Customer> {
     private String idUrl;
 
     /**
+     * 地址
+     */
+    private String addr;
+    /**
      * 创建人
      */
     private Long creator;

@@ -1,19 +1,14 @@
 package com.feng.hotel.domain;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-
-import java.util.Date;
-
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
-
-import java.io.Serializable;
-
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -54,6 +49,11 @@ public class OrderRoom extends Model<OrderRoom> {
      * 订单状态 lodging：入住中，out离开，closure:关闭
      */
     private String status;
+
+    /**
+     * 房间价格
+     */
+    private Integer price;
     /**
      * 入住时间
      */

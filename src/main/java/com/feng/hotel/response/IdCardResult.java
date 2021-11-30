@@ -20,4 +20,8 @@ public class IdCardResult {
 
     @ApiModelProperty(value = "用户名称")
     private String name;
+
+    @ApiModelProperty(value = "性别")
+    private String cex;
+
 }

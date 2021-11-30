@@ -69,7 +69,7 @@ public class Order extends Model<Order> {
     /**
      * 余额
      */
-    private BigDecimal balance;
+    private Integer balance;
 
     /**
      * 订单状态 lodging：入住中，out离开，closure:关闭
@@ -79,12 +79,12 @@ public class Order extends Model<Order> {
     /**
      * 总价(已交的钱)
      */
-    private BigDecimal totalPrice;
+    private Integer totalPrice;
 
     /**
      * 押金
      */
-    private BigDecimal mortgage;
+    private Integer mortgage;
 
 
     public static final String CREATOR = "creator";

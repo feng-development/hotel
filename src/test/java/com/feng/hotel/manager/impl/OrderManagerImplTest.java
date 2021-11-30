@@ -23,13 +23,13 @@ public class OrderManagerImplTest extends HotelApplicationTests {
     @Test
     public void save() {
         CreateOrderRequest request = new CreateOrderRequest();
-        request.setMortgage(new BigDecimal(60));
-        request.setTotalPrice(new BigDecimal("60"));
+        request.setMortgage(6000);
+        request.setTotalPrice(6000);
 
         RoomUserRequest roomUserRequest = new RoomUserRequest();
         roomUserRequest.setRoomId(1L);
-        roomUserRequest.setBalance(new BigDecimal(60));
-        roomUserRequest.setPath(Collections.singletonList("E:/20210810085204.jpg"));
+        roomUserRequest.setBalance(60);
+        roomUserRequest.setCustomerId(Collections.singletonList(8153517317391216640L));
         request.setRoomUsers(Collections.singletonList(roomUserRequest));
         orderManager.save(request, 123L);
     }

@@ -5,16 +5,12 @@ import com.feng.hotel.common.enums.IdCardStatusEnum;
 import com.feng.hotel.response.IdCardResult;
 import com.feng.hotel.service.IIdCardService;
 import com.feng.hotel.utils.json.JsonUtils;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.HashMap;
-
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
 
 /**
  * @author Administrator
@@ -34,6 +30,8 @@ public class IdCardServiceImpl implements IIdCardService {
     private final static String WORDS = "words";
     private final static String ID_NO_KEY = "公民身份号码";
     private final static String NAME_KEY = "姓名";
+    private final static String ADDR = "住址";
+    private final static String CEX = "性别";
 
     public IdCardServiceImpl(AipOcr aipOcr) {
         this.aipOcr = aipOcr;
@@ -64,6 +62,8 @@ public class IdCardServiceImpl implements IIdCardService {
         idCardResult.setName(wordsResult.getJSONObject(NAME_KEY).getString(WORDS));
         //设置身份证
         idCardResult.setIdNum(wordsResult.getJSONObject(ID_NO_KEY).getString(WORDS));
+        //设置性别
+        idCardResult.setCex(wordsResult.getJSONObject(CEX).getString(WORDS));
         return idCardResult;
     }
 }

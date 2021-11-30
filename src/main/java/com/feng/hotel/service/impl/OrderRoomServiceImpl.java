@@ -39,6 +39,7 @@ public class OrderRoomServiceImpl extends ServiceImpl<OrderRoomMapper, OrderRoom
             .setBeginTime(date)
             .setType(request.getType())
             .setStatus(HotelConstants.OrderStatus.LODGING)
+            .setPrice(request.getBalance())
             .setCreateTime(date)
             .setModifyTime(date)
             .setCreator(userNo)

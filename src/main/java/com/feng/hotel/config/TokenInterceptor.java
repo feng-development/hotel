@@ -27,7 +27,6 @@ public class TokenInterceptor implements HandlerInterceptor {
      */
     protected static final Splitter JWT_SPLITTER = Splitter.on(Constants.DOT);
 
-
     /**
      * JWT长度
      */

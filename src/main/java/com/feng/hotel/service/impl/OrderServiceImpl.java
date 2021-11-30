@@ -46,7 +46,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
             .setMortgage(request.getMortgage())
             .setStatus(HotelConstants.OrderStatus.LODGING)
             .setTotalPrice(request.getTotalPrice())
-            .setBalance(request.getTotalPrice().subtract(request.getMortgage()));
+            .setBalance(request.getTotalPrice()-request.getMortgage());
 
         this.save(order);
 

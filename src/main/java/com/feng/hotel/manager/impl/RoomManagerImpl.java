@@ -1,16 +1,18 @@
 package com.feng.hotel.manager.impl;
 
 import com.feng.hotel.base.Constants;
+import com.feng.hotel.base.exception.BizException;
+import com.feng.hotel.base.exception.EnumReturnStatus;
 import com.feng.hotel.common.HotelConstants;
 import com.feng.hotel.common.enums.HotelEnum;
 import com.feng.hotel.common.enums.RoomStatusEnum;
 import com.feng.hotel.domain.Customer;
-import com.feng.hotel.domain.Order;
 import com.feng.hotel.domain.OrderCustomer;
 import com.feng.hotel.domain.OrderRoom;
 import com.feng.hotel.domain.Room;
 import com.feng.hotel.manager.IRoomManager;
 import com.feng.hotel.request.RoomRequest;
+import com.feng.hotel.request.RoomSwapRequest;
 import com.feng.hotel.response.CustomerResponse;
 import com.feng.hotel.response.RoomResponse;
 import com.feng.hotel.service.ICustomerService;
@@ -21,6 +23,9 @@ import com.feng.hotel.service.IRoomService;
 import com.feng.hotel.utils.Assert;
 import com.feng.hotel.utils.LambdaUtils;
 import com.feng.hotel.utils.json.JsonUtils;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Collections;
 import java.util.Date;
@@ -29,10 +34,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
 /**
  * @author Administrator
@@ -134,6 +135,40 @@ public class RoomManagerImpl implements IRoomManager {
         roomService.updateStatus(Collections.singleton(roomId), RoomStatusEnum.READY_CLEAN, userNo);
         //修改房间订单关联状态
         orderRoomService.updateStatus(room.getOrderId(), roomId, HotelConstants.OrderStatus.OUT, userNo);
+
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void swap(RoomSwapRequest roomSwapRequest, Long userNo) {
+        Date date = new Date();
+
+        OrderRoom orderRoom = this.orderRoomService.getById(roomSwapRequest.getOrderRootId());
+        if (Objects.isNull(orderRoom)) {
+            throw new BizException(EnumReturnStatus.ROOM_NOT_EXIST);
+        }
+
+        Room room = this.roomService.getById(roomSwapRequest.getNewRootId());
+        //判断房间是否处于正常状态
+        if (!Objects.equals(roomSwapRequest.getNewRootId(), orderRoom.getRoomId()) && Objects.equals(room.getStatus(), RoomStatusEnum.NORMAL.name())) {
+            throw new BizException(EnumReturnStatus.ROOM_STATUS_ERROR);
+        }
+
+        //修改原房间状态
+        this.orderRoomService.updateById(
+            orderRoom.setStatus(HotelConstants.OrderStatus.OUT)
+                .setModifier(userNo)
+                .setModifyTime(date)
+                .setBeginTime(date)
+        );
+
+        //换到新房间
+        this.orderRoomService.save();
+
+    }
+
+
+    private void build() {
 
     }
 }

@@ -1,20 +1,13 @@
 package com.feng.hotel.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-
-import java.math.BigDecimal;
-
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-
-import java.util.Date;
-import java.io.Serializable;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -43,9 +36,9 @@ public class Room extends Model<Room> {
     private String roomNo;
 
     /**
-     * 价格
+     * 价格 分
      */
-    private BigDecimal price;
+    private Integer price;
 
     /**
      * 状态 normal:正常，ready_clean：打扫中，repair：维修中，quit：退房

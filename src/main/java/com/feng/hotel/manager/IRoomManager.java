@@ -1,11 +1,10 @@
 package com.feng.hotel.manager;
 
 import com.feng.hotel.request.RoomRequest;
+import com.feng.hotel.request.RoomSwapRequest;
 import com.feng.hotel.response.RoomResponse;
 
 import java.util.List;
-
-import org.springframework.stereotype.Service;
 
 /**
  * @author Administrator
@@ -19,7 +18,7 @@ public interface IRoomManager {
      *
      * @param roomRequest 房间参数
      */
-    void save(RoomRequest roomRequest,Long userNo);
+    void save(RoomRequest roomRequest, Long userNo);
 
     /**
      * 获取房间列表
@@ -41,9 +40,16 @@ public interface IRoomManager {
     /**
      * 退房
      *
-     * @param roomId     房间id
+     * @param roomId 房间id
      * @param userNo 操作人
      */
     void quit(Long roomId, Long userNo);
 
+    /**
+     * 换房
+     *
+     * @param roomSwapRequest 换房参数
+     * @param userNo          用户id
+     */
+    void swap(RoomSwapRequest roomSwapRequest, Long userNo);
 }

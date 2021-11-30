@@ -79,13 +79,9 @@ public class OrderManagerImpl implements IOrderManager {
 
         for (RoomUserRequest roomUser : request.getRoomUsers()) {
 
-            for (String path : roomUser.getPath()) {
-                //获取用户身份信息
-                IdCardResult idCardResult = idCardService.idCardRecognition(path);
-                //尝试添加用户
-                Customer customer = customerService.trySave(idCardResult, path);
+            for (Long customerId : roomUser.getCustomerId()) {
                 //添加订单房间客户关联
-                orderCustomerService.save(roomUser.getRoomId(), order.getId(), customer.getId(), userNo);
+                orderCustomerService.save(roomUser.getRoomId(), order.getId(), customerId, userNo);
             }
 
             //添加订单房间管理

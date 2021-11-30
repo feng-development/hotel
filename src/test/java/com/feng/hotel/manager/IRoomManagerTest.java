@@ -26,7 +26,7 @@ public class IRoomManagerTest extends HotelApplicationTests {
     public void save() {
         RoomRequest roomRequest = new RoomRequest();
         roomRequest.setRoomNo("401");
-        roomRequest.setPrice(new BigDecimal("60"));
+        roomRequest.setPrice(6000);
         roomRequest.setId(IdWorkerUtils.generateLongId());
         roomRequest.setType("大床");
         roomManager.save(roomRequest,123L);

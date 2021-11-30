@@ -18,13 +18,13 @@ import lombok.Data;
 public class RoomUserRequest {
 
     @ApiModelProperty(value = "房间价格")
-    private BigDecimal balance;
+    private Integer balance;
 
     @ApiModelProperty(value = "房间id")
     private Long roomId;
 
-    @ApiModelProperty(value = "身份证图片url")
-    private List<String> path;
+    @ApiModelProperty(value = "客户id")
+    private List<Long> customerId;
 
     @ApiModelProperty(value = "房间状态 DAILY:日租 MONTHLY：月组 HOURLY：钟点")
     private String type;

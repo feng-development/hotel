@@ -26,4 +26,20 @@ public interface HotelConstants extends Constants {
         String CLOSE = "close";
     }
 
+    /**
+     * 添加
+     */
+    interface Insert {
+    }
+
+
+    /**
+     * 修改
+     */
+    interface Update {
+
+    }
+
+    ;
+
 }
