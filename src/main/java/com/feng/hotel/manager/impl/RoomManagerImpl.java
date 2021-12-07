@@ -15,6 +15,7 @@ import com.feng.hotel.manager.IRoomManager;
 import com.feng.hotel.request.RoomRequest;
 import com.feng.hotel.request.RoomSwapRequest;
 import com.feng.hotel.response.CustomerResponse;
+import com.feng.hotel.response.OrderRoomTreeResponse;
 import com.feng.hotel.response.RoomResponse;
 import com.feng.hotel.service.ICustomerService;
 import com.feng.hotel.service.IOrderRoomCustomerService;
@@ -25,6 +26,7 @@ import com.feng.hotel.service.IRoomService;
 import com.feng.hotel.utils.Assert;
 import com.feng.hotel.utils.LambdaUtils;
 import com.feng.hotel.utils.json.JsonUtils;
+import com.feng.hotel.utils.tree.handler.TreeBuilderHandler;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -102,8 +104,9 @@ public class RoomManagerImpl implements IRoomManager {
         List<OrderRoom> orderRooms = this.orderRoomService.queryByOrderIds(orderIds).stream().filter(e -> !Objects.equals(e.getStatus(), HotelConstants.OrderStatus.CLOSE)).collect(Collectors.toList());
         Map<Long, OrderRoom> map = LambdaUtils.map(orderRooms, OrderRoom::getId);
 
-        //总价
-        int sumPrice = payRecordService.queryByOrderIds(orderIds).stream().mapToInt(PayRecord::getPrice).sum();
+        //订单支付历史
+        List<PayRecord> payRecords = payRecordService.queryByOrderIds(orderIds);
+        Map<Long, List<PayRecord>> orderPayRecord = payRecords.stream().collect(Collectors.groupingBy(PayRecord::getOrderId));
 
 
         //查询每个房间的在住人
@@ -120,10 +123,9 @@ public class RoomManagerImpl implements IRoomManager {
             return orderRoom.getRoomId();
         }, e -> customerMap.get(e.getCustomerId()));
 
-        return roomResponses.stream().map(e -> {
+        return roomResponses.stream().peek(e -> {
             e.setCustomers(JsonUtils.convertList(longListMap.get(e.getId()), CustomerResponse.class));
             e.setBalance(1);
-            return e;
         }).collect(Collectors.toList());
     }
 
@@ -179,12 +181,13 @@ public class RoomManagerImpl implements IRoomManager {
         );
 
         //换到新房间
-        this.orderRoomService.save(orderRoom.getOrderId(),orderRoom.getPid(),roomSwapRequest.getType(), roomSwapRequest.getPrice(),roomSwapRequest.getNewRootId(),userNo);
+        this.orderRoomService.save(orderRoom.getOrderId(), orderRoom.getPid(), roomSwapRequest.getType(), roomSwapRequest.getPrice(), roomSwapRequest.getNewRootId(), userNo);
 
     }
 
 
     private void countPrice() {
+        List<OrderRoomTreeResponse> orderRoomTreeResponses = new TreeBuilderHandler<>(JsonUtils.convertList(roomResponses, OrderRoomTreeResponse.class)).buildTree();
 
     }
 }

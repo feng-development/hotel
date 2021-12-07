@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.feng.hotel.mapper.PayRecordMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.feng.hotel.domain.PayRecord">
+        <id column="id" property="id" />
+        <result column="price" property="price" />
+        <result column="creator" property="creator" />
+        <result column="modifier" property="modifier" />
+        <result column="modifyTime" property="modifyTime" />
+        <result column="createTime" property="createTime" />
+    </resultMap>
+
+</mapper>

@@ -57,13 +57,11 @@ public class OrderRoom extends Model<OrderRoom> {
     /**
      * 入住时间
      */
-    @TableField("beginTime")
     private Date beginTime;
 
     /**
      * 离开时间
      */
-    @TableField("engTime")
     private Date engTime;
 
 
