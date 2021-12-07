@@ -1,21 +1,19 @@
 package com.feng.hotel.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.feng.hotel.base.Constants.Valid;
 import com.feng.hotel.common.HotelConstants;
-import com.feng.hotel.common.enums.RoomStatusEnum;
 import com.feng.hotel.domain.OrderRoom;
 import com.feng.hotel.mapper.OrderRoomMapper;
 import com.feng.hotel.request.RoomUserRequest;
 import com.feng.hotel.service.IOrderRoomService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.feng.hotel.utils.IdWorkerUtils;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-
-import org.springframework.stereotype.Service;
 
 /**
  * <p>
@@ -30,23 +28,8 @@ public class OrderRoomServiceImpl extends ServiceImpl<OrderRoomMapper, OrderRoom
     IOrderRoomService {
 
     @Override
-    public void save(Long orderId, RoomUserRequest request, Long userNo) {
-        Date date = new Date();
-        this.save(new OrderRoom()
-            .setId(IdWorkerUtils.generateLongId())
-            .setOrderId(orderId)
-            .setRoomId(request.getRoomId())
-            .setBeginTime(date)
-            .setType(request.getType())
-            .setStatus(HotelConstants.OrderStatus.LODGING)
-            .setPrice(request.getBalance())
-            .setCreateTime(date)
-            .setModifyTime(date)
-            .setCreator(userNo)
-            .setModifier(userNo)
-            .setValid(Valid.NORMAL)
-        );
-
+    public OrderRoom save(Long orderId, RoomUserRequest request, Long userNo) {
+        return this.save(orderId, 0L, request.getType(), request.getBalance(), request.getRoomId(), userNo);
     }
 
     @Override
@@ -74,5 +57,25 @@ public class OrderRoomServiceImpl extends ServiceImpl<OrderRoomMapper, OrderRoom
                 .eq(OrderRoom::getOrderId, orderId)
                 .eq(OrderRoom::getRoomId, roomId)
         );
+    }
+
+    @Override
+    public OrderRoom save(Long orderId, Long pid, String type, Integer price, Long roomId, Long userNo) {
+        Date date = new Date();
+        OrderRoom orderRoom = new OrderRoom()
+            .setId(IdWorkerUtils.generateLongId())
+            .setOrderId(orderId)
+            .setRoomId(roomId)
+            .setBeginTime(date)
+            .setType(type)
+            .setStatus(HotelConstants.OrderStatus.LODGING)
+            .setPrice(price)
+            .setCreateTime(date)
+            .setModifyTime(date)
+            .setCreator(userNo)
+            .setModifier(userNo)
+            .setValid(Valid.NORMAL);
+        this.save(orderRoom);
+        return orderRoom;
     }
 }

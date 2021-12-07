@@ -25,10 +25,10 @@ public class IRoomManagerTest extends HotelApplicationTests {
     @Test
     public void save() {
         RoomRequest roomRequest = new RoomRequest();
-        roomRequest.setRoomNo("401");
+        roomRequest.setRoomNo("404");
         roomRequest.setPrice(6000);
         roomRequest.setId(IdWorkerUtils.generateLongId());
-        roomRequest.setType("大床");
+        roomRequest.setType("三人间");
         roomManager.save(roomRequest,123L);
 
         System.out.println(JsonUtils.serialize(roomRequest));

@@ -22,7 +22,7 @@ public class RoomResponse {
 
 
     @ApiModelProperty(value = "价格")
-    private BigDecimal price;
+    private Integer price;
 
     @ApiModelProperty(value = "状态 normal:正常，ready_clean：打扫中，repair：维修中，using：使用中")
     private String status;
@@ -31,7 +31,7 @@ public class RoomResponse {
     private Long orderId;
 
     @ApiModelProperty(value = "余额， 一个订单多个房间显示总余额")
-    private BigDecimal balance;
+    private Integer balance;
 
     @ApiModelProperty(value = "在住人")
     private List<CustomerResponse> customers;

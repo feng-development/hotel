@@ -30,8 +30,9 @@ public class IdCardServiceImpl implements IIdCardService {
     private final static String WORDS = "words";
     private final static String ID_NO_KEY = "公民身份号码";
     private final static String NAME_KEY = "姓名";
-    private final static String ADDR = "住址";
     private final static String CEX = "性别";
+    private final static String NATION = "民族";
+    private final static String DATE_BIRTH = "出生";
 
     public IdCardServiceImpl(AipOcr aipOcr) {
         this.aipOcr = aipOcr;
@@ -64,6 +65,10 @@ public class IdCardServiceImpl implements IIdCardService {
         idCardResult.setIdNum(wordsResult.getJSONObject(ID_NO_KEY).getString(WORDS));
         //设置性别
         idCardResult.setCex(wordsResult.getJSONObject(CEX).getString(WORDS));
+        // 设置民族
+        idCardResult.setNation(wordsResult.getJSONObject(NATION).getString(WORDS));
+        // 出生日期
+        idCardResult.setDateBirth(wordsResult.getJSONObject(DATE_BIRTH).getString(WORDS));
         return idCardResult;
     }
 }

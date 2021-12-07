@@ -2,13 +2,12 @@ package com.feng.hotel.domain;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-
-import java.util.Date;
-import java.io.Serializable;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -55,6 +54,17 @@ public class Customer extends Model<Customer> {
      * 地址
      */
     private String addr;
+
+    /**
+     * 出生日期
+     */
+    private String dateBirth;
+
+    /**
+     * 民族
+     */
+    private String nation;
+
     /**
      * 创建人
      */

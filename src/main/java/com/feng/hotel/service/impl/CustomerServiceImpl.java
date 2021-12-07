@@ -46,7 +46,10 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
             .setIdNo(idCardResult.getIdNum())
             .setIdUrl(path)
             .setAddr(idCardResult.getAddress())
-            .setCex(idCardResult.getCex());
+            .setCex(idCardResult.getCex())
+            .setNation(idCardResult.getNation())
+            .setDateBirth(idCardResult.getDateBirth())
+            .setValid(Valid.NORMAL);
 
         this.save(customer);
 
@@ -60,7 +63,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         }
         return this.list(
             Wrappers.<Customer>lambdaQuery()
-                .in(Customer::getId)
+                .in(Customer::getId, customerIds)
                 .eq(Customer::getValid, Valid.NORMAL)
         );
     }

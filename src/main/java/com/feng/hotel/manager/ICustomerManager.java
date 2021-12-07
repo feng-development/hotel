@@ -22,7 +22,7 @@ public interface ICustomerManager {
      * 保存客户
      *
      * @param canonicalPath 客户id
-     * @return
+     * @return 客户信息
      */
     Customer save(String canonicalPath);
 }

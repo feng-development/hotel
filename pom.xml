@@ -35,6 +35,9 @@
     <baidu.aip.version>4.16.2</baidu.aip.version>
     <spring-data-redis.version>2.0.8.RELEASE</spring-data-redis.version>
     <swagger.version>2.5.0</swagger.version>
+    <jackson.version>2.9.0</jackson.version>
+    <protostuff.version>1.5.9</protostuff.version>
+    <redisson.version>3.12.0</redisson.version>
   </properties>
 
   <dependencies>
@@ -201,6 +204,21 @@
       <groupId>com.baidu.aip</groupId>
       <artifactId>java-sdk</artifactId>
       <version>${baidu.aip.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.protostuff</groupId>
+      <artifactId>protostuff-core</artifactId>
+      <version>${protostuff.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.protostuff</groupId>
+      <artifactId>protostuff-runtime</artifactId>
+      <version>${protostuff.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.protostuff</groupId>
+      <artifactId>protostuff-api</artifactId>
+      <version>${protostuff.version}</version>
     </dependency>
   </dependencies>
 

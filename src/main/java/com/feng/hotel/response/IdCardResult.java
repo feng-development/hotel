@@ -24,4 +24,10 @@ public class IdCardResult {
     @ApiModelProperty(value = "性别")
     private String cex;
 
+    @ApiModelProperty(value = "出生日期")
+    private String dateBirth;
+
+    @ApiModelProperty(value = "民族")
+    private String nation;
+
 }

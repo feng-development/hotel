@@ -1,8 +1,8 @@
 package com.feng.hotel.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.feng.hotel.common.enums.RoomStatusEnum;
 import com.feng.hotel.domain.Room;
-import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
 import java.util.Set;
@@ -41,4 +41,15 @@ public interface IRoomService extends IService<Room> {
      * @return 房间列表
      */
     List<Room> queryByIds(Set<Long> roomIds);
+
+    /**
+     * 使用房间
+     *
+     * @param roomIds 房间id
+     * @param orderId 订单id
+     * @param userNo  操作人
+     */
+    void using(Set<Long> roomIds, Long orderId, Long userNo);
+
+
 }

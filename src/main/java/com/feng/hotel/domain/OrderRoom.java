@@ -44,7 +44,7 @@ public class OrderRoom extends Model<OrderRoom> {
     /**
      * 上间房子的订单房间id 仅做转房使用
      */
-    private String pid;
+    private Long pid;
     /**
      * 订单状态 lodging：入住中，out离开，closure:关闭
      */

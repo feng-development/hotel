@@ -27,9 +27,9 @@ public class OrderManagerImplTest extends HotelApplicationTests {
         request.setTotalPrice(6000);
 
         RoomUserRequest roomUserRequest = new RoomUserRequest();
-        roomUserRequest.setRoomId(1L);
+        roomUserRequest.setRoomId(8156415538949509120L);
         roomUserRequest.setBalance(60);
-        roomUserRequest.setCustomerId(Collections.singletonList(8153517317391216640L));
+        roomUserRequest.setCustomerId(Collections.singletonList(8156446146045759488L));
         request.setRoomUsers(Collections.singletonList(roomUserRequest));
         orderManager.save(request, 123L);
     }

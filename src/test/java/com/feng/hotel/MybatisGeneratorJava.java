@@ -59,7 +59,7 @@ public class MybatisGeneratorJava {
     private static final String PACKAGE = "com.feng.hotel";
 
     //修改为你要生成的表名
-    private static final String TABLE_NAME = "tb_customer";
+    private static final String TABLE_NAME = "tb_pay_record";
 
     //修改为表的前缀
     private static final String TABLE_PREFIX = "tb_";
@@ -126,9 +126,9 @@ public class MybatisGeneratorJava {
         dsc.setTypeConvert(new MySqlTypeConvert());
         dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setUrl(
-            "jdbc:mysql://127.0.0.1:3306/hotel?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&useSSL=false");
+            "jdbc:mysql://192.168.20.202:3306/db_hotel?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&useSSL=false");
         dsc.setUsername("root");
-        dsc.setPassword("root");
+        dsc.setPassword("123456");
         generator.setDataSource(dsc);
 
         PackageConfig packConfig = new PackageConfig();

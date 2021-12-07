@@ -21,10 +21,11 @@ public interface IOrderRoomService extends IService<OrderRoom> {
      * 添加订单与房间的管理
      *
      * @param orderId 订单id
-     * @param userNo  用户id
      * @param request 房间信息
+     * @param userNo  用户id
+     * @return 订单房间关联
      */
-    void save(Long orderId, RoomUserRequest request, Long userNo);
+    OrderRoom save(Long orderId, RoomUserRequest request, Long userNo);
 
     /**
      * 查询订单房间
@@ -51,4 +52,17 @@ public interface IOrderRoomService extends IService<OrderRoom> {
      * @param userNo          用户id
      */
     void updateStatus(Long orderId, Long roomId, String orderRoomStatus, Long userNo);
+
+    /**
+     * 添加房间
+     *
+     * @param orderId 订单id
+     * @param pid     上级id
+     * @param type    类型
+     * @param price   价格
+     * @param roomId  房间id
+     * @param userNo  当前登陆人
+     * @return 房间信息
+     */
+    OrderRoom save(Long orderId, Long pid, String type, Integer price, Long roomId, Long userNo);
 }

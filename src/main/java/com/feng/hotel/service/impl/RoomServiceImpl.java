@@ -2,20 +2,19 @@ package com.feng.hotel.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.feng.hotel.common.enums.RoomStatusEnum;
 import com.feng.hotel.domain.Room;
 import com.feng.hotel.mapper.RoomMapper;
 import com.feng.hotel.service.IRoomService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.feng.hotel.utils.CollectionUtils;
+import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-
-import org.springframework.stereotype.Service;
 
 /**
  * <p>
@@ -60,6 +59,20 @@ public class RoomServiceImpl extends ServiceImpl<RoomMapper, Room> implements IR
         return this.list(
             Wrappers.<Room>lambdaQuery()
                 .in(Room::getId, roomIds)
+        );
+    }
+
+    @Override
+    public void using(Set<Long> roomIds, Long orderId, Long userNo) {
+        List<Room> rooms = this.queryByIds(roomIds);
+        rooms.forEach(e -> RoomStatusEnum.valueOf(e.getStatus()).validateNextStatus(RoomStatusEnum.USING));
+
+        this.update(Wrappers.<Room>lambdaUpdate()
+            .set(Room::getStatus, RoomStatusEnum.USING)
+            .set(Room::getModifyTime, new Date())
+            .set(Room::getOrderId, orderId)
+            .set(Room::getModifier, userNo)
+            .in(Room::getId, roomIds)
         );
     }
 }

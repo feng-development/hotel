@@ -67,11 +67,6 @@ public class Order extends Model<Order> {
     private String orderNo;
 
     /**
-     * 余额
-     */
-    private Integer balance;
-
-    /**
      * 订单状态 lodging：入住中，out离开，closure:关闭
      */
     private String status;
