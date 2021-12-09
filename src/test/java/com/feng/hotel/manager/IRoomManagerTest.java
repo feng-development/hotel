@@ -3,6 +3,7 @@ package com.feng.hotel.manager;
 import com.feng.hotel.HotelApplicationTests;
 import com.feng.hotel.common.enums.OrderRoomTypeEnum;
 import com.feng.hotel.request.RoomRequest;
+import com.feng.hotel.request.RoomSwapRequest;
 import com.feng.hotel.response.RoomResponse;
 import com.feng.hotel.utils.IdWorkerUtils;
 import com.feng.hotel.utils.json.JsonUtils;
@@ -41,7 +42,18 @@ public class IRoomManagerTest extends HotelApplicationTests {
     }
 
     @Test
-    public void name() {
+    public void quit() {
         roomManager.quit(123L,123L);
+    }
+
+    @Test
+    public void swap() {
+        RoomSwapRequest roomSwapRequest = new RoomSwapRequest();
+        roomSwapRequest.setPrice(8000);
+        roomSwapRequest.setType(OrderRoomTypeEnum.DAILY.name());
+        roomSwapRequest.setOrderRootId(8157126223357493248L);
+        roomSwapRequest.setNewRootId(8156448341568999424L);
+        roomManager.swap(roomSwapRequest,123L);
+
     }
 }

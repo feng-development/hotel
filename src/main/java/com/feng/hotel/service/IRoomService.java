@@ -52,4 +52,11 @@ public interface IRoomService extends IService<Room> {
     void using(Set<Long> roomIds, Long orderId, Long userNo);
 
 
+    /**
+     * 退房
+     *
+     * @param roomIds 房间id
+     * @param userNo  用户id
+     */
+    void swap(Set<Long> roomIds, Long userNo);
 }

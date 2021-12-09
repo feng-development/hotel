@@ -25,7 +25,9 @@ import com.feng.hotel.service.IPayRecordService;
 import com.feng.hotel.service.IRoomService;
 import com.feng.hotel.utils.Assert;
 import com.feng.hotel.utils.LambdaUtils;
+import com.feng.hotel.utils.date.DateUtils;
 import com.feng.hotel.utils.json.JsonUtils;
+import com.feng.hotel.utils.tree.TreeUtils;
 import com.feng.hotel.utils.tree.handler.TreeBuilderHandler;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +36,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -106,8 +109,7 @@ public class RoomManagerImpl implements IRoomManager {
 
         //订单支付历史
         List<PayRecord> payRecords = payRecordService.queryByOrderIds(orderIds);
-        Map<Long, List<PayRecord>> orderPayRecord = payRecords.stream().collect(Collectors.groupingBy(PayRecord::getOrderId));
-
+        HashMap<Long, Integer> orderPrice = countOrderPrice(orderRooms, payRecords);
 
         //查询每个房间的在住人
         Collection<OrderRoomCustomer> orderRoomCustomers = this.orderRoomCustomerService.queryByOrderRoomId(map.keySet());
@@ -125,9 +127,45 @@ public class RoomManagerImpl implements IRoomManager {
 
         return roomResponses.stream().peek(e -> {
             e.setCustomers(JsonUtils.convertList(longListMap.get(e.getId()), CustomerResponse.class));
-            e.setBalance(1);
+            e.setBalance(orderPrice.get(e.getOrderId()));
         }).collect(Collectors.toList());
     }
+
+    /**
+     * 计算订单价格
+     *
+     * @param orderRooms     订单房间id
+     * @param orderPayRecord 订单的支付记录
+     * @return key:订单id value:订单余额
+     */
+    private HashMap<Long, Integer> countOrderPrice(List<OrderRoom> orderRooms, List<PayRecord> orderPayRecord) {
+        //找出订单下的房间
+        Map<Long, List<OrderRoom>> orderRoomMap = LambdaUtils.mapList(orderRooms, OrderRoom::getOrderId, e -> e);
+
+        Map<Long, List<PayRecord>> orderPay = orderPayRecord.stream().collect(Collectors.groupingBy(PayRecord::getOrderId));
+
+        HashMap<Long, Integer> orderPrice = new HashMap<>();
+        //遍历房间计算每个房间的价格
+        //普通房开始时间08:00-第二天12点前算一天， 当天开房当天退算一天
+        orderRoomMap.keySet().forEach(e -> {
+            List<OrderRoomTreeResponse> orderRoomTreeResponses = new TreeBuilderHandler<>(JsonUtils.convertList(orderRoomMap.get(e), OrderRoomTreeResponse.class)).buildTree();
+            int sum = TreeUtils.resolveAll(orderRoomTreeResponses).stream().mapToInt(i -> {
+
+
+                int diffDays = DateUtils.getDiffDays(i.getBeginTime(), Objects.isNull(i.getEngTime()) ? new Date() : i.getEngTime());
+                if (i.getPid() == 0 && DateUtils.getHour(i.getBeginTime()) < 6) {
+                    diffDays++;
+                }
+                return i.getPrice() * diffDays;
+            }).sum();
+
+            int balance = orderPay.get(e).stream().mapToInt(PayRecord::getPrice).sum();
+
+            orderPrice.put(e, balance - sum);
+        });
+        return orderPrice;
+    }
+
 
     @Override
     public void updateStatus(Long id, String status, Long userId) {
@@ -161,33 +199,54 @@ public class RoomManagerImpl implements IRoomManager {
     public void swap(RoomSwapRequest roomSwapRequest, Long userNo) {
         Date date = new Date();
 
+        //查询原房间
         OrderRoom orderRoom = this.orderRoomService.getById(roomSwapRequest.getOrderRootId());
         if (Objects.isNull(orderRoom)) {
             throw new BizException(EnumReturnStatus.ROOM_NOT_EXIST);
         }
 
+        //查询新房间
         Room room = this.roomService.getById(roomSwapRequest.getNewRootId());
         //判断房间是否处于正常状态
-        if (!Objects.equals(roomSwapRequest.getNewRootId(), orderRoom.getRoomId()) && Objects.equals(room.getStatus(), RoomStatusEnum.NORMAL.name())) {
+        if (!Objects.equals(roomSwapRequest.getNewRootId(), orderRoom.getRoomId()) && !Objects.equals(room.getStatus(), RoomStatusEnum.NORMAL.name())) {
             throw new BizException(EnumReturnStatus.ROOM_STATUS_ERROR);
         }
 
-        //修改原房间状态
+
+        //修改源房间状态为待打扫
+        this.roomService.swap(Collections.singleton(orderRoom.getRoomId()), userNo);
+
+        //修改订单原房间状态
         this.orderRoomService.updateById(
             orderRoom.setStatus(HotelConstants.OrderStatus.OUT)
                 .setModifier(userNo)
                 .setModifyTime(date)
-                .setBeginTime(date)
+                .setEngTime(date)
         );
 
         //换到新房间
-        this.orderRoomService.save(orderRoom.getOrderId(), orderRoom.getPid(), roomSwapRequest.getType(), roomSwapRequest.getPrice(), roomSwapRequest.getNewRootId(), userNo);
+        OrderRoom save = this.orderRoomService.save(orderRoom.getOrderId(), orderRoom.getId(), roomSwapRequest.getType(), roomSwapRequest.getPrice(), roomSwapRequest.getNewRootId(), userNo);
+
+        //修改新房间状态为入住
+        this.roomService.using(Collections.singleton(roomSwapRequest.getNewRootId()), save.getOrderId(), userNo);
+
+        //源房间的人转到新房间
+        //1源房间人离开
+        List<OrderRoomCustomer> orderRoomCustomers = this.orderRoomCustomerService.queryByOrderRoomId(Collections.singleton(orderRoom.getId()));
+        this.orderRoomCustomerService.updateBatchById(
+            orderRoomCustomers
+                .stream()
+                .peek(e ->
+                    e.setStatus(HotelConstants.OrderStatus.OUT)
+                        .setModifyTime(new Date())
+                        .setModifier(userNo)
+                ).collect(Collectors.toList())
+        );
+
+        //2新增房间入住人
+        this.orderRoomCustomerService.saveBatch(save.getId(), orderRoomCustomers.stream().map(OrderRoomCustomer::getCustomerId).collect(Collectors.toList()), userNo);
 
     }
 
 
-    private void countPrice() {
-        List<OrderRoomTreeResponse> orderRoomTreeResponses = new TreeBuilderHandler<>(JsonUtils.convertList(roomResponses, OrderRoomTreeResponse.class)).buildTree();
-
-    }
 }

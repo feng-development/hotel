@@ -15,6 +15,8 @@
  */
 package com.feng.hotel.utils.date;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -22,6 +24,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,8 +32,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-
-import org.apache.commons.lang.StringUtils;
 
 /**
  * Thread safe date util 线程安全的日期工具类
@@ -490,8 +491,16 @@ public final class DateUtils {
      * @return 相差的天数
      */
     public static int getDiffDays(Date startDay, Date endDay) {
-        Duration between = Duration.between(toLocalDate(startDay), toLocalDate(endDay));
-        return (int) between.toDays();
+        //获取第一个时间点的时间戳对应的秒数
+        long t1 = toLocalDateTime(startDay).toEpochSecond(ZoneOffset.ofHours(0));
+        //获取第一个时间点在是1970年1月1日后的第几天
+        long day1 = t1 / (60 * 60 * 24);
+        //获取第二个时间点的时间戳对应的秒数
+        long t2 = toLocalDateTime(endDay).toEpochSecond(ZoneOffset.ofHours(0));
+        //获取第二个时间点在是1970年1月1日后的第几天
+        long day2 = t2 / (60 * 60 * 24);
+        //返回两个时间点的天数差
+        return (int) (day2 - day1);
     }
 
     /**
@@ -500,6 +509,7 @@ public final class DateUtils {
      * @return 相差的天数
      */
     public static int getDiffHour(Date startDay, Date endDay) {
+
         Duration between = Duration.between(toLocalDate(startDay), toLocalDate(endDay));
         return (int) between.toHours();
     }
@@ -539,5 +549,29 @@ public final class DateUtils {
         return startTime.compareTo(dateTime) <= 0 && endTime.compareTo(dateTime) >= 0;
     }
 
+    /**
+     * 把{@link Date} 转换为 {@link LocalDateTime} 类型
+     *
+     * @param date Date
+     * @return LocalDateTime类型
+     */
+    public static LocalDateTime toLocalDateTime(Date date) {
+        if (date == null) {
+            throw new NullPointerException("Input Date is null.");
+        }
+
+        return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+    }
+
+    /**
+     * 获取时间的小时数
+     *
+     * @param date 时间
+     * @return 小时 0-24
+     */
+    public static int getHour(Date date) {
+        LocalDateTime localDateTime = toLocalDateTime(date);
+        return localDateTime.getHour();
+    }
 
 }

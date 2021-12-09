@@ -47,20 +47,27 @@ public class CustomerController {
         return Result.success(page);
     }
 
+    /**
+     * 上传图片进行ocr认证
+     *
+     * @param file 文件
+     * @return 客户信息
+     * @throws IOException 异常
+     */
     @PostMapping(value = "/save")
-    public Customer upload(@RequestParam(value = "file") MultipartFile multipartFile) throws IOException {
-        String fileName = multipartFile.getOriginalFilename();
+    public Customer upload(@RequestParam(value = "file") MultipartFile file) throws IOException {
+        String fileName = file.getOriginalFilename();
 
-        File file = new File(System.getProperty("user.dir").concat("/image/").concat(IdWorkerUtils.generateStringId())
+        File file1 = new File(System.getProperty("user.dir").concat("/image/").concat(IdWorkerUtils.generateStringId())
             .concat(GlobalUtils.getFileExt(fileName)));
-        if (!file.exists()) {
-            if (!file.mkdirs()) {
+        if (!file1.exists()) {
+            if (!file1.mkdirs()) {
                 throw new BizException(BizInfo.FILE_UPLOAD_ERROR);
             }
         }
 
-        multipartFile.transferTo(file);
-        String canonicalPath = file.getCanonicalPath();
+        file.transferTo(file1);
+        String canonicalPath = file1.getCanonicalPath();
 
         return customerManager.save(canonicalPath);
     }

@@ -64,6 +64,7 @@ public class OrderRoomServiceImpl extends ServiceImpl<OrderRoomMapper, OrderRoom
         Date date = new Date();
         OrderRoom orderRoom = new OrderRoom()
             .setId(IdWorkerUtils.generateLongId())
+            .setPid(pid)
             .setOrderId(orderId)
             .setRoomId(roomId)
             .setBeginTime(date)

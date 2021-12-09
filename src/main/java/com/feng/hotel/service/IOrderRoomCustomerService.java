@@ -2,7 +2,6 @@ package com.feng.hotel.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.feng.hotel.domain.OrderRoomCustomer;
-import com.feng.hotel.request.RoomUserRequest;
 
 import java.util.List;
 import java.util.Set;
@@ -25,10 +24,12 @@ public interface IOrderRoomCustomerService extends IService<OrderRoomCustomer> {
      */
     List<OrderRoomCustomer> queryByOrderRoomId(Set<Long> collect);
 
-    /**添加
-     * @param orderRoomId  订单房间关联id
+    /**
+     * 添加
+     *
+     * @param orderRoomId 订单房间关联id
      * @param customerIds 客户id
-     * @param userNo 当前用户id
+     * @param userNo      当前用户id
      */
     void saveBatch(Long orderRoomId, List<Long> customerIds, Long userNo);
 }

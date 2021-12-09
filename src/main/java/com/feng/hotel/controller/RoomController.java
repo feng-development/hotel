@@ -34,6 +34,12 @@ public class RoomController extends BaseController {
         this.roomManager = roomManager;
     }
 
+    /**
+     * 添加房间
+     *
+     * @param roomRequest 房间参数
+     * @return 房间
+     */
     @PostMapping(value = "save")
     @ApiOperation(value = "添加房间")
     public Result<?> save(@RequestBody @Validated RoomRequest roomRequest) {
@@ -41,6 +47,12 @@ public class RoomController extends BaseController {
         return Result.success();
     }
 
+    /**
+     * 房间列表
+     *
+     * @param status 状态查询
+     * @return 房间列表
+     */
     @GetMapping(value = "list")
     @ApiOperation(value = "房间列表")
     public List<RoomResponse> list(@RequestParam(value = "status", required = false) String status) {
@@ -48,6 +60,12 @@ public class RoomController extends BaseController {
     }
 
 
+    /**
+     * 修改房间状态
+     *
+     * @param id     房间id
+     * @param status 状态
+     */
     @GetMapping(value = "update/status/{id}/{status}")
     @ApiOperation(value = "修改房间状态 ")
     public void post(@PathVariable(value = "id") @NotNull(message = "id不能为空") Long id,
@@ -55,15 +73,25 @@ public class RoomController extends BaseController {
         roomManager.updateStatus(id, status, super.getUserNo());
     }
 
+    /**
+     * 退房
+     *
+     * @param id 房间id
+     */
     @GetMapping(value = "quit/{id}")
     @ApiModelProperty(value = "退房")
     public void quit(@PathVariable(value = "id") Long id) {
         roomManager.quit(id, super.getUserNo());
     }
 
+    /**
+     * 退房/改价
+     *
+     * @param roomSwapRequest 参数
+     */
     @GetMapping(value = "swap")
     @ApiModelProperty(value = "退房/改价")
     public void swap(@RequestBody RoomSwapRequest roomSwapRequest) {
-        roomManager.swap(roomSwapRequest,super.getUserNo());
+        roomManager.swap(roomSwapRequest, super.getUserNo());
     }
 }

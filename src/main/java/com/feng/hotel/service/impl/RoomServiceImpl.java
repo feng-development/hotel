@@ -75,4 +75,16 @@ public class RoomServiceImpl extends ServiceImpl<RoomMapper, Room> implements IR
             .in(Room::getId, roomIds)
         );
     }
+
+    @Override
+    public void swap(Set<Long> roomIds, Long userNo) {
+        this.update(
+            Wrappers.<Room>lambdaUpdate()
+            .set(Room::getOrderId,null)
+            .set(Room::getModifier,userNo)
+            .set(Room::getModifyTime,new Date())
+            .set(Room::getStatus,RoomStatusEnum.READY_CLEAN)
+            .in(Room::getId,roomIds)
+        );
+    }
 }
