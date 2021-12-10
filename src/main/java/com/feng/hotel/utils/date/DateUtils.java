@@ -503,6 +503,7 @@ public final class DateUtils {
         return (int) (day2 - day1);
     }
 
+
     /**
      * 获取两个时间相差的小时
      *

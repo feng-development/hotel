@@ -139,6 +139,7 @@ public class RoomManagerImpl implements IRoomManager {
      * @return key:订单id value:订单余额
      */
     private HashMap<Long, Integer> countOrderPrice(List<OrderRoom> orderRooms, List<PayRecord> orderPayRecord) {
+        Date date = new Date();
         //找出订单下的房间
         Map<Long, List<OrderRoom>> orderRoomMap = LambdaUtils.mapList(orderRooms, OrderRoom::getOrderId, e -> e);
 
@@ -150,10 +151,18 @@ public class RoomManagerImpl implements IRoomManager {
         orderRoomMap.keySet().forEach(e -> {
             List<OrderRoomTreeResponse> orderRoomTreeResponses = new TreeBuilderHandler<>(JsonUtils.convertList(orderRoomMap.get(e), OrderRoomTreeResponse.class)).buildTree();
             int sum = TreeUtils.resolveAll(orderRoomTreeResponses).stream().mapToInt(i -> {
-
-
-                int diffDays = DateUtils.getDiffDays(i.getBeginTime(), Objects.isNull(i.getEngTime()) ? new Date() : i.getEngTime());
+                int diffDays = 0;
+               //开房小于6点 算一天
                 if (i.getPid() == 0 && DateUtils.getHour(i.getBeginTime()) < 6) {
+                    diffDays++;
+                }
+
+                //退房时间
+                Date endDate=Objects.isNull(i.getEngTime()) ? date : i.getEngTime();
+
+                //退房小于12点 算一天
+                diffDays += DateUtils.getDiffDays(i.getBeginTime(), endDate);
+                if (DateUtils.getHour(endDate) > 12) {
                     diffDays++;
                 }
                 return i.getPrice() * diffDays;
